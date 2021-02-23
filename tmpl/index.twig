@@ -1,0 +1,64 @@
+{% extends 'index1.twig' %}
+
+{% block contents %}
+
+
+    <h2 class="mt-4">
+        Slim Twig extension
+    </h2>
+
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Result</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>
+                        <code>full_url_for('home')</code>
+                    </td>
+                    <td>
+                        {{ full_url_for('home') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>is_current_url('home')</code>
+                    </td>
+                    <td>
+                        {{ is_current_url('home') ? 'TRUE' : 'FALSE' }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>current_url()</code>
+                    </td>
+                    <td>
+                        {{ current_url() }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <code>get_uri().scheme</code>
+                    </td>
+                    <td>
+                        {{ get_uri().scheme }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="mt-4">
+        ORM
+    </h2>
+
+    <p>
+        By default this project uses dotrine ORM.
+    </p>
+
+{% endblock %}
