@@ -1,4 +1,4 @@
-# Windows thumbnail cache files
+# Windows thumbnail doctrine files
 Thumbs.db
 Thumbs.db:encryptable
 ehthumbs.db
@@ -26,3 +26,5 @@ $RECYCLE.BIN/
 vendor/
 uploads/
 logs/
+.idea/
+package-lock.json

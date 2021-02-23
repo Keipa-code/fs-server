@@ -6,11 +6,14 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
 use Slim\Views\Twig;
 
+
 return function (ContainerBuilder $containerBuilder) {
+
     $containerBuilder->addDefinitions([
         'logger' => function (ContainerInterface $container) {
             $settings = $container->get('settings');
@@ -37,17 +40,24 @@ return function (ContainerBuilder $containerBuilder) {
             );
             return EntityManager::create($settings['doctrine']['connection'], $config);
         },
-        'session' => function (ContainerInterface $container) {
-            return new \App\Middleware\SessionMiddleware;
-        },
-        'flash' => function (ContainerInterface $container) {
-            $session = $container->get('session');
-            return new \Slim\Flash\Messages($session);
-        },
         'view' => function (ContainerInterface $container) {
-            $settings = $container->get('settings');
-            return Twig::create($settings['view']['template_path'], $settings['view']['twig']);
+            $settings = $container->get('settings')['views'];
+            return Twig::create(__DIR__ . '/../tmpl', ['cache' => __DIR__ . '/../var/cache/twig']);
         },
+        'moveUploadedFile' => function(){
+            return function (string $directory, UploadedFileInterface $uploadedFile) {
+
+            $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+
+            // see http://php.net/manual/en/function.random-bytes.php
+            $basename = bin2hex(random_bytes(8));
+            $filename = sprintf('%s.%0.8s', $basename, $extension);
+
+            $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+            return $filename;
+        };
+        }
     ]);
 };
 

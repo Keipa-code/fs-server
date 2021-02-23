@@ -39,7 +39,7 @@ $middleware($app);
 $routes = require $rootPath . '/conf/routes.php';
 $routes($app);
 
-// Set the cache file for the routes. Note that you have to delete this file
+// Set the doctrine file for the routes. Note that you have to delete this file
 // whenever you change the routes.
 if (!$settings['debug']) {
 	$app->getRouteCollector()->setCacheFile($settings['route_cache']);
@@ -47,11 +47,6 @@ if (!$settings['debug']) {
 
 // Add the routing middleware.
 $app->addRoutingMiddleware();
-
-// Add error handling middleware.
-$errorMiddleware = $app->addErrorMiddleware($settings['debug'], !$settings['debug'], false);
-$errorHandler = $errorMiddleware->getDefaultErrorHandler();
-$errorHandler->registerErrorRenderer('text/html', App\Renderer\HtmlErrorRenderer::class);
 
 // Run the app
 $app->run();

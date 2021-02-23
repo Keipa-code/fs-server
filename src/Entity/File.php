@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,33 +15,44 @@ use Doctrine\ORM\Mapping as ORM;
 class File
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(name="filename", type="string", length=60, nullable=false, options={"fixed"=true})
      */
-    protected $name;
+    protected $filename;
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(name="size", type="string", length=30, nullable=false, options={"fixed"=true})
      */
     protected $size;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="datetime")
+     * @var DateTime
      */
     protected $uploadDate;
     /**
-     * @ORM\Column(type="string")
+     * @var string|null
+     *
+     * @ORM\Column(name="authorComment", type="string", length=200, nullable=true, options={"default"="null","fixed"=true})
      */
     protected $authorComment;
     /**
-     * @ORM\Column(type="string")
+     * @var string|null
+     *
+     * @ORM\Column(name="preview", type="string", length=200, nullable=true, options={"default"="null","fixed"=true})
      */
     protected $preview;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="preview", type="string", length=200, nullable=false)
      */
     protected $link;
 
@@ -48,14 +61,14 @@ class File
         return $this->id;
     }
 
-    public function getName()
+    public function getFilename()
     {
-        return $this->name;
+        return $this->filename;
     }
 
-    public function setName($name)
+    public function setFilename($filename)
     {
-        $this->name = $name;
+        $this->filename = $filename;
     }
 
     public function getSize()

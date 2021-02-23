@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
+use DI\Container;
 use Slim\App;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Views\TwigMiddleware;
 
-return function (App $app){
-    $settings = $app->getContainer()->get('settings');
-    $app->addErrorMiddleware(
-        $settings['displayErrorDetails'],
-        $settings['logErrors'],
-        $settings['logErrorDetails']
-    );
+return function(App $app) {
+    $app->add(TwigMiddleware::createFromContainer($app));
 };
+
