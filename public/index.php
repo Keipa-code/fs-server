@@ -1,56 +1,57 @@
 <?php
-
 declare(strict_types=1);
 
-use DI\Container;
+use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
-use Psr\Http\Message\UploadedFileInterface;
+use Slim\Factory\ServerRequestCreatorFactory;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+// Set the absolute path to the root directory.
+$rootPath = realpath(__DIR__ . '/..');
 
-$container = new Container;
+// Include the composer autoloader.
+include_once($rootPath . '/vendor/autoload.php');
 
-$settings = require __DIR__. '/../app/settings.php';
-$settings($container);
+// Instantiate PHP-DI ContainerBuilder
+$containerBuilder = new ContainerBuilder();
 
-$logger = require __DIR__. '/../app/logger.php';
-$logger($container);
+// Set up settings
+$settings = require $rootPath . '/conf/settings.php';
+$settings($containerBuilder);
 
+// Set up dependencies
+$dependencies = require $rootPath . '/conf/dependencies.php';
+$dependencies($containerBuilder);
 
+// Build PHP-DI Container instance
+$container = $containerBuilder->build();
 
-// Set Container on App
-AppFactory::setContainer($container);
+$settings = $container->get('settings');
 
+// Instantiate the app
+$app = AppFactory::createFromContainer($container);
+$app->setBasePath($settings['base_path']);
 
-
-// Create App
-$app = AppFactory::create();
-
-$views = require __DIR__. '/../app/views.php';
-$views($app);
-
-$middleware = require __DIR__. '/../app/middleware.php';
+// Register middleware
+$middleware = require $rootPath . '/conf/middleware.php';
 $middleware($app);
 
-$routes = require __DIR__ . '/../app/routes.php';
+// Register routes
+$routes = require $rootPath . '/conf/routes.php';
 $routes($app);
 
-
-
-
-function moveUploadedFile(string $directory, UploadedFileInterface $uploadedFile)
-{
-    $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-
-    // see http://php.net/manual/en/function.random-bytes.php
-    $basename = bin2hex(random_bytes(8));
-    $filename = sprintf('%s.%0.8s', $basename, $extension);
-
-    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
-
-    return $filename;
+// Set the cache file for the routes. Note that you have to delete this file
+// whenever you change the routes.
+if (!$settings['debug']) {
+	$app->getRouteCollector()->setCacheFile($settings['route_cache']);
 }
 
-$app->run();
+// Add the routing middleware.
+$app->addRoutingMiddleware();
 
-//require_once __DIR__ . ('/../src/Views/index.html');
+// Add error handling middleware.
+$errorMiddleware = $app->addErrorMiddleware($settings['debug'], !$settings['debug'], false);
+$errorHandler = $errorMiddleware->getDefaultErrorHandler();
+$errorHandler->registerErrorRenderer('text/html', App\Renderer\HtmlErrorRenderer::class);
+
+// Run the app
+$app->run();
