@@ -28,3 +28,7 @@ uploads/
 logs/
 .idea/
 package-lock.json
+/composer.lock
+/composer.phar
+/var/
+/bin/
