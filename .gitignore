@@ -33,3 +33,4 @@ logs/
 package-lock.json
 /composer.lock
 /composer.phar
+/docker-compose.yml
