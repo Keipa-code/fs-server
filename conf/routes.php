@@ -11,7 +11,7 @@ return function (App $app) {
     $app->post('/', 'App\Controller\FileController:uploadFile')->setName('uploaded');
 
     $app->group('/file', function (Group $group) {
-        $group->map(['GET', 'POST'],'/', 'App\Controller\FileController:uploadFile')->setName('upload');
+        $group->map(['GET', 'POST'],'/uploaded/[/{id}]', 'App\Controller\FileController:uploadFile')->setName('upload');
         $group->get('/{fileName}', 'App\Controller\FileController:downloadFile')->setName('download');
     });
 };

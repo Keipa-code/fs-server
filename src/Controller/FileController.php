@@ -47,6 +47,11 @@ class FileController
         return $filename;
     }
 
+    protected function getDownloadLink($fileBaseName)
+    {
+
+    }
+
     public function index(Request $request, Response $response, array $args = []): Response
     {
         $this->logger->info("Home page action dispatched");
@@ -81,14 +86,16 @@ class FileController
                 }
                 $this->em->flush();
             }
-        }else{
-            $this->message="Данная странница не существует";
+            return $response->withHeader('Location', '/file/'.)->withStatus(302);
+        }elseif ($request->getMethod() == 'GET'){
+            $file = $this->em->find('App\Entity\File', intval($args['id']));
+            return $this->render($request, $response, 'post.twig', ['download' => $file]);
         }
         return $this->render($request, $response, 'post.twig', ['upload' => $this->message]);
     }
     public function downloadFile(Request $request, Response $response, array $args = []): Response
     {
         $file = new File();
-
+        $file->set
     }
 }
