@@ -47,8 +47,8 @@ return function (ContainerBuilder $containerBuilder) {
                 'metadata_dirs' => [APP_ROOT . '/src/Entity'],
                 */
                 'connection' => [
-                    'driver' => 'pdo_mysql',
-                    'host' => '192.168.1.10',
+                    'driver' => 'pdo_pgsql',
+                    'host' => '192.168.0.182',
                     'dbname' => 'test',
                     'user' => 'admin',
                     'password' => '123456',

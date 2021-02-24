@@ -52,7 +52,7 @@ class File
      */
     protected $preview;
     /**
-     * @ORM\Column(name="preview", type="string", length=200, nullable=false)
+     * @ORM\Column(name="link", type="string", length=200, nullable=false)
      */
     protected $link;
 
@@ -80,14 +80,15 @@ class File
         $this->size = $size;
     }
 
+    public function setUploadDate(DateTime $uploadDate)
+    {
+        $this->uploadDate = $uploadDate;
+    }
     public function getUploadDate()
     {
         return $this->uploadDate;
     }
-    public function setUploadDate($uploadDate)
-    {
-        $this->uploadDate = $uploadDate;
-    }
+
 
     public function getAuthorComment()
     {

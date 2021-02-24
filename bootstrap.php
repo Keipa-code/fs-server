@@ -19,7 +19,7 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src/Entit
 // database configuration parameters
 $conn = array(
     'driver'   => 'pdo_pgsql',
-    'host'     => '192.168.1.10',
+    'host'     => '192.168.0.182',
     'user'     => 'admin',
     'password' => '123456',
     'dbname'   => 'test'

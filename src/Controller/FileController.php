@@ -4,7 +4,8 @@
 namespace App\Controller;
 
 
-
+use App\Entity\File;
+use DateTime;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -58,17 +59,28 @@ class FileController
         $this->logger->info("Upload file using slim 4");
         $directory = $this->upload_directory;
         $uploadedFiles = $request->getUploadedFiles();
-
+        $file = new File();
+        var_dump($uploadedFiles['example3']);
         // handle single input with multiple file uploads
         foreach ($uploadedFiles['example3'] as $uploadedFile) {
             if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                $file->setFilename($uploadedFile->getClientFilename());
+                $file->setSize($uploadedFile->getSize());
+                if (isset($args['authorComment'])){
+                    $file->setAuthorComment($args['authorComment']);
+                }
                 $filename = $this->moveUploadedFile($directory, $uploadedFile);
+                $file->setLink($filename);
+                $file->setPreview($uploadedFile->getClientMediaType());
+                $file->setUploadDate(new DateTime("now"));
+
                 $this->message = "Uploaded: " . $filename . "<br/>";
+                $this->em->persist($file);
+
             }
+            $this->em->flush();
         }
 
         return $this->render($request, $response, 'post.twig', ['uploaded' => $this->message]);
     }
-
-
 }
