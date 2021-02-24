@@ -56,31 +56,39 @@ class FileController
 
     public function uploadFile(Request $request, Response $response, array $args = []): Response
     {
-        $this->logger->info("Upload file using slim 4");
-        $directory = $this->upload_directory;
-        $uploadedFiles = $request->getUploadedFiles();
-        $file = new File();
-        var_dump($uploadedFiles['example3']);
-        // handle single input with multiple file uploads
-        foreach ($uploadedFiles['example3'] as $uploadedFile) {
-            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-                $file->setFilename($uploadedFile->getClientFilename());
-                $file->setSize($uploadedFile->getSize());
-                if (isset($args['authorComment'])){
-                    $file->setAuthorComment($args['authorComment']);
+        if($request->getMethod() == 'POST') {
+            $this->logger->info("Upload file using slim 4");
+            $directory = $this->upload_directory;
+            $uploadedFiles = $request->getUploadedFiles();
+            $file = new File();
+            var_dump($uploadedFiles['example3']);
+            // handle single input with multiple file uploads
+            foreach ($uploadedFiles['example3'] as $uploadedFile) {
+                if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                    $file->setFilename($uploadedFile->getClientFilename());
+                    $file->setSize($uploadedFile->getSize());
+                    if (isset($args['authorComment'])) {
+                        $file->setAuthorComment($args['authorComment']);
+                    }
+                    $filename = $this->moveUploadedFile($directory, $uploadedFile);
+                    $file->setLink($filename);
+                    $file->setPreview($uploadedFile->getClientMediaType());
+                    $file->setUploadDate(new DateTime("now"));
+
+                    $this->message = "Uploaded: " . $filename . "<br/>";
+                    $this->em->persist($file);
+
                 }
-                $filename = $this->moveUploadedFile($directory, $uploadedFile);
-                $file->setLink($filename);
-                $file->setPreview($uploadedFile->getClientMediaType());
-                $file->setUploadDate(new DateTime("now"));
-
-                $this->message = "Uploaded: " . $filename . "<br/>";
-                $this->em->persist($file);
-
+                $this->em->flush();
             }
-            $this->em->flush();
+        }else{
+            $this->message="Данная странница не существует";
         }
+        return $this->render($request, $response, 'post.twig', ['upload' => $this->message]);
+    }
+    public function downloadFile(Request $request, Response $response, array $args = []): Response
+    {
+        $file = new File();
 
-        return $this->render($request, $response, 'post.twig', ['uploaded' => $this->message]);
     }
 }
