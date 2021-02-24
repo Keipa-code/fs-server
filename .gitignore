@@ -1,0 +1,10 @@
+vendor/
+uploads/
+node_modules/
+logs/
+test.*
+.gitignore
+composer.lock
+composer.phar
+package-lock.json
+.idea/
