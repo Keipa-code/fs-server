@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Application\Thumbs;
 use App\Entity\File;
 use DateTime;
 use Psr\Container\ContainerInterface;
@@ -47,9 +48,12 @@ class FileController
         return $filename;
     }
 
-    protected function getDownloadLink($fileBaseName)
+    protected function createThumbs($file)
     {
-
+        $thumb = new Thumbs($file);
+        $thumb->resize(200,0);
+        $thumbFile = $thumb->output();
+        return $thumbFile;
     }
 
     public function index(Request $request, Response $response, array $args = []): Response
@@ -61,7 +65,7 @@ class FileController
 
     public function uploadFile(Request $request, Response $response, array $args = []): Response
     {
-        if($request->getMethod() == 'POST') {
+
             $this->logger->info("Upload file using slim 4");
             $directory = $this->upload_directory;
             $uploadedFiles = $request->getUploadedFiles();
@@ -86,16 +90,14 @@ class FileController
                 }
                 $this->em->flush();
             }
-            return $response->withHeader('Location', '/file/'.)->withStatus(302);
-        }elseif ($request->getMethod() == 'GET'){
-            $file = $this->em->find('App\Entity\File', intval($args['id']));
-            return $this->render($request, $response, 'post.twig', ['download' => $file]);
-        }
+
+
         return $this->render($request, $response, 'post.twig', ['upload' => $this->message]);
     }
     public function downloadFile(Request $request, Response $response, array $args = []): Response
     {
-        $file = new File();
-        $file->set
+        $file = $this->em->find('App\Entity\File', intval($args['id']));
+        return $this->render($request, $response, 'file.twig', ['file' => $file]);
+        $qwe = new Thumb;
     }
 }

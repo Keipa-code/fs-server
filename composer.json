@@ -5,7 +5,8 @@
             "App\\Entity\\": "src/Entity",
             "App\\Command\\" : "src/Command",
             "App\\Middleware\\" : "src/Middleware",
-            "App\\Renderer\\" : "src/Renderer"
+            "App\\Renderer\\" : "src/Renderer",
+            "App\\Application\\" : "src/Application"
         }
     },
     "require": {
