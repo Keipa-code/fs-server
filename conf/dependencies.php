@@ -41,8 +41,8 @@ return function (ContainerBuilder $containerBuilder) {
             return EntityManager::create($settings['doctrine']['connection'], $config);
         },
         'view' => function (ContainerInterface $container) {
-            $settings = $container->get('settings')['views'];
-            return Twig::create(__DIR__ . '/../tmpl', ['cache' => __DIR__ . '/../var/cache/twig']);
+            $settings = $container->get('settings');
+            return Twig::create($settings['views']['template_path'], $settings['views']['twig']);
         },
         'moveUploadedFile' => function(){
             return function (string $directory, UploadedFileInterface $uploadedFile) {

@@ -6,9 +6,9 @@ use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
-    $app->get('/', 'Application\Controller\FileController:index')->setName('home');
+    $app->get('/', 'App\Controller\FileController:index')->setName('home');
 
-    $app->post('/', 'Application\Controller\FileController:uploadFile')->setName('uploaded');
+    $app->post('/', 'App\Controller\FileController:uploadFile')->setName('uploaded');
 
 
 };

@@ -26,7 +26,8 @@ return function (ContainerBuilder $containerBuilder) {
             'views' => [
                 'template_path' => $rootPath . '/tmpl',
                 'twig' => [
-                    'cache' => false
+                    'cache' => false,
+                    'auto_reload' => true,
                 ],
             ],
             'doctrine' => [
@@ -48,7 +49,7 @@ return function (ContainerBuilder $containerBuilder) {
                 */
                 'connection' => [
                     'driver' => 'pdo_pgsql',
-                    'host' => '192.168.0.182',
+                    'host' => 'postgres',
                     'dbname' => 'test',
                     'user' => 'admin',
                     'password' => '123456',

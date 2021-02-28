@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 
-use App\Application\Thumbs;
+use App\Helper\Thumbs;
 use App\Entity\File;
 use DateTime;
 use Psr\Container\ContainerInterface;
@@ -50,16 +50,18 @@ class FileController
 
     protected function createThumbs($file)
     {
-        $thumb = new Thumbs($file);
+        $directory = $this->upload_directory;
+        $filePath = $directory.DIRECTORY_SEPARATOR.$file;
+        $thumbsPath = $directory.DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR.$file;
+        copy($filePath, $thumbsPath);
+        $thumb = new Thumbs($thumbsPath);
         $thumb->resize(200,0);
-        $thumbFile = $thumb->output();
-        return $thumbFile;
+        $thumb->save();
     }
 
     public function index(Request $request, Response $response, array $args = []): Response
     {
         $this->logger->info("Home page action dispatched");
-
         return $this->render($request, $response, 'index.twig');
     }
 
@@ -69,35 +71,35 @@ class FileController
             $this->logger->info("Upload file using slim 4");
             $directory = $this->upload_directory;
             $uploadedFiles = $request->getUploadedFiles();
-            $file = new File();
-            var_dump($uploadedFiles['example3']);
+            //$file = new File();
+            //var_dump($uploadedFiles['example3']);
             // handle single input with multiple file uploads
             foreach ($uploadedFiles['example3'] as $uploadedFile) {
                 if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                    $file = new File();
                     $file->setFilename($uploadedFile->getClientFilename());
                     $file->setSize($uploadedFile->getSize());
                     if (isset($args['authorComment'])) {
                         $file->setAuthorComment($args['authorComment']);
                     }
                     $filename = $this->moveUploadedFile($directory, $uploadedFile);
+                    $this->createThumbs($filename);
+                    $file->setPreview($filename);
                     $file->setLink($filename);
-                    $file->setPreview($uploadedFile->getClientMediaType());
                     $file->setUploadDate(new DateTime("now"));
-
                     $this->message = "Uploaded: " . $filename . "<br/>";
                     $this->em->persist($file);
-
+                    $this->em->flush();
                 }
-                $this->em->flush();
+
             }
-
-
         return $this->render($request, $response, 'post.twig', ['upload' => $this->message]);
     }
+
     public function downloadFile(Request $request, Response $response, array $args = []): Response
     {
         $file = $this->em->find('App\Entity\File', intval($args['id']));
         return $this->render($request, $response, 'file.twig', ['file' => $file]);
-        $qwe = new Thumb;
+
     }
 }
