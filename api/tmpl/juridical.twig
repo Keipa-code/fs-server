@@ -1,0 +1,66 @@
+{% extends 'layout.twig' %}
+
+{% block contents %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <h2 class="col-3 g-2">{{ head }}</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <form class="col-3  mb-3" action="{{ url_for(action) }}" method="post">
+                <div class="form-group mb-3">
+                    <label for="phonenumber" class="form-label">Номер телефона</label>
+                    <input type="text" class="form-control" name="phonenumber" value="{{ rows.phonenumber }}"
+                           id="phonenumber" pattern="[0-9\s\-()]{8,20}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="organizationName" class="form-label">Название организации</label>
+                    <input type="text" class="form-control" name="organizationName" value="{{ rows.organizationName }}"
+                           id="organizationName" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="departmentName" class="form-label">Отдел</label>
+                    <input type="text" class="form-control" name="departmentName" value="{{ rows.departmentName }}"
+                           id="departmentName" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="country" class="form-label">Страна</label>
+                    <input type="text" class="form-control" name="country" value="{{ rows.country }}"
+                           id="country" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="city" class="form-label">Город</label>
+                    <input type="text" class="form-control" name="city" value="{{ rows.city }}"
+                           id="city" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="street" class="form-label">Улица</label>
+                    <input type="text" class="form-control" name="street" value="{{ rows.street }}"
+                           id="street" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="houseNumber" class="form-label">Номер дома/здания</label>
+                    <input type="text" class="form-control" name="houseNumber" value="{{ rows.houseNumber }}"
+                           id="houseNumber" pattern="[0-9A-Za-zА-Яа-яЁё\s\-()]{1,7}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="floatNumber" class="form-label">Номер квартиры/кабинета</label>
+                    <input type="text" class="form-control" name="floatNumber" value="{{ rows.floatNumber }}"
+                           id="floatNumber" pattern="[0-9A-Za-zА-Яа-яЁё\s\-()]{0,5}">
+                </div>
+                <input type="hidden" name="id" value="{{ rows.id }}">
+                <input type="hidden" name="type" value="{{ type }}">
+                <input type="hidden" name="urlPath" value="{{ urlPath }}">
+                <button type="submit" class="btn btn-success">{{ command }}</button>
+                {% if action == 'update' %}
+                    <button type="submit" class="btn btn-danger" formaction="{{ '/v1/manage/remove' }}" onclick="return confirm('Подтвердите удаление номера {{ rows.phonenumber }}')">Удалить</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="/js/my.private.script.js"></script>
+{% endblock %}

@@ -1,0 +1,8 @@
+.btn-primary {
+  color: #fff;
+  background-color: #a10dfd;
+  border-color: #a10dfd;
+}
+input.invalid {
+  border-color: #DD2C00;
+}

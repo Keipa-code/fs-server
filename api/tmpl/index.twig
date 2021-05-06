@@ -1,0 +1,59 @@
+{% extends 'layout.twig' %}
+
+{% block contents %}
+    <div class="container">
+        <div class="row justify-content-md-end">
+            <div class="col-auto mt-3">
+                <a href="{{ (url_for('manage'))|e }}" role="button" class="btn btn-success">Управление справочником</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-lg">
+        <h1>
+            <div class="mb-5">
+                <div class="display-1">
+                    <p>Телефонный справочник</p>
+                </div>
+            </div>
+        </h1>
+    </div>
+
+    <div class="container">
+        <div class="d-flex bd-highlight">
+            <form class="d-inline-flex flex-fill bd-highlight" action="/list" method="get">
+                <div class="p-2 flex-fill bd-highlight">
+                    <input type="search" class="form-control" id="phonenumber" name="phonenumber"
+                           placeholder="Номер телефона" aria-label="Номер телефона" pattern="[0-9\s\-()]{4,20}" value="{{ phonenumber }}">
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    <button type="submit" class="btn btn-primary">Поиск</button>
+                </div>
+            </form>
+            <form class="d-inline-flex flex-fill bd-highlight" action="/list" method="get">
+                <div class="p-2 flex-fill bd-highlight">
+                    <input type="search" class="form-control" id="fio" name="fio" placeholder="Ф.И.О." value="{{ fio }}"
+                           aria-label="Ф.И.О." pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <div class="p-2 flex-fill bd-highlight">
+                    <button type="submit" class="btn btn-primary">Поиск</button>
+                </div>
+            </form>
+
+        <form class="d-inline-flex flex-fill bd-highlight" action="/list" method="get">
+            <div class="p-2 flex-fill bd-highlight">
+                <input type="search" class="form-control" id="organizationName" name="organizationName" placeholder="Название организации"
+                       aria-label="Название организации" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}" value="{{ orgName }}">
+            </div>
+
+            <div class="p-2 flex-fill bd-highlight">
+                <button type="submit" class="btn btn-primary">Поиск</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    {% block list %}
+    {% endblock %}
+{% block script %}
+    <script src="/js/my.index.script.js"></script>
+{% endblock %}
+{% endblock %}

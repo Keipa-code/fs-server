@@ -1,0 +1,45 @@
+{% extends 'layout.twig' %}
+
+{% block contents %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <h2 class="col-3 g-2">{{ head }}</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <form class="col-3" action="{{ url_for(action) }}" method="post">
+                <div class="form-group mb-3">
+                    <label for="phonenumber" class="form-label">Номер телефона</label>
+                    <input type="text" class="form-control" name="phonenumber" value="{{ rows.phonenumber }}"
+                           id="phonenumber" pattern="[0-9\s\-()]{8,20}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="firstname" class="form-label">Имя</label>
+                    <input type="text" class="form-control" name="firstname" value="{{ rows.firstname }}"
+                           id="firstname" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="surname" class="form-label">Фамилия</label>
+                    <input type="text" class="form-control" name="surname" value="{{ rows.surname }}" id="surname" pattern="[A-Za-zА-Яа-яЁё\s]{1,30}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="patronymic" class="form-label">Отчество</label>
+                    <input type="text" class="form-control" name="patronymic" value="{{ rows.patronymic }}"
+                           id="patronymic" pattern="[A-Za-zА-Яа-яЁё\s-]{1,30}">
+                </div>
+                <input type="hidden" name="id" value="{{ rows.id }}">
+                <input type="hidden" name="type" value="{{ type }}">
+                <input type="hidden" name="urlPath" value="{{ urlPath }}">
+                <button type="submit" class="btn btn-success">{{ command }}</button>
+                {% if action == 'update' %}
+                <button type="submit" class="btn btn-danger" formaction="{{ '/v1/manage/remove' }}" onclick="return confirm('Подтвердите удаление номера {{ rows.phonenumber }}')">Удалить</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="/js/my.private.script.js"></script>
+{% endblock %}

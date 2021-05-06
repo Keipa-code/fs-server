@@ -1,0 +1,91 @@
+version: '3.2'
+services:
+
+  gateway:
+    build:
+      context: gateway/docker
+      dockerfile: development/nginx/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - frontend
+      - api
+
+  frontend:
+    build:
+      context: frontend/docker/development/nginx
+    depends_on:
+      - frontend-node
+
+  frontend-node:
+    build:
+      context: frontend/docker/development/node
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend:/var/www
+    command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && yarn start"
+    tty: true
+
+  frontend-node-cli:
+    build:
+      context: frontend/docker/development/node
+    volumes:
+      - ./frontend:/var/www
+
+  api:
+    build:
+      context: api/docker
+      dockerfile: development/nginx/Dockerfile
+    volumes:
+      - ./api:/var/www
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build:
+      context: api/docker
+      dockerfile: development/php-fpm/Dockerfile
+    volumes:
+      - ./api:/var/www
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker-ts"
+      APP_ENV: dev
+      APP_DEBUG: 1
+      DB_HOST: postgres
+      DB_USER: phonedir
+      DB_PASSWORD: 123456
+      DB_NAME: admin
+      FRONTEND_URL: http://localhost:8080
+
+  php-cli:
+    build:
+      context: api/docker
+      dockerfile: development/php-cli/Dockerfile
+    volumes:
+      - ./api:/var/www
+    restart: unless-stopped
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: 1
+      DB_HOST: postgres
+      DB_USER: phonedir
+      DB_PASSWORD: 123456
+      DB_NAME: admin
+      FRONTEND_URL: http://localhost:8080
+
+  postgres:
+    image: postgres:13.1-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: phonedir
+    volumes:
+      - api-postgres:/var/lib/postgresql/data
+    ports:
+      - "54321:5432"
+    command: ["postgres", "-c", "log_statement=all"]
+
+volumes:
+  api-postgres:
