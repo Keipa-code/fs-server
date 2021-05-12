@@ -61,4 +61,60 @@ class File
         $this->previewLink = $previewLink ?? null;
         $this->authorComment = $authorComment;
     }
+
+    /**
+     * @return Id
+     */
+    public function getId(): Id
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return DateTimeImmutable
+     */
+    public function getDate(): DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilesize(): string
+    {
+        return $this->filesize;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileLink(): string
+    {
+        return $this->fileLink;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPreviewLink(): ?string
+    {
+        return $this->previewLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorComment(): string
+    {
+        return $this->authorComment;
+    }
 }

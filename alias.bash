@@ -9,6 +9,7 @@ alias app="docker-compose run --rm php-cli composer app"
 alias linter="docker-compose run --rm php-cli composer lint"
 alias lint="linter && phpcs"
 alias test-e2e="api-fixtures && cucumber-clear && cucumber-e2e"
+alias api-test="docker-compose run --rm php-cli composer test"
 
 # Symfony
 alias console="docker-compose run --rm php-fpm php ./bin/console"
@@ -108,6 +109,7 @@ api-init() {
   permissions
   api-composer-install
   api-wait-db
+  api-migrations
 }
 
 make-init() {

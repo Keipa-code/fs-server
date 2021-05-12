@@ -10,10 +10,7 @@
     <testsuites>
         <testsuite name="unit">
             <directory>src/Upload/Test</directory>
-            <directory>src/FeatureToggle/Test</directory>
-            <directory>src/Frontend/Test</directory>
             <directory>src/Http/Test</directory>
-            <directory>src/Router/Test</directory>
         </testsuite>
         <testsuite name="functional">
             <directory>tests/Functional</directory>
@@ -25,10 +22,7 @@
             <directory suffix=".php">src</directory>
         </include>
         <exclude>
-            <directory>src/Auth/Test</directory>
-            <directory>src/FeatureToggle/Test</directory>
-            <directory>src/Frontend/Test</directory>
-            <directory>src/Http/Test</directory>
+            <directory>src/Upload/Test</directory>
         </exclude>
     </coverage>
 

@@ -1,3 +1,6 @@
+api-test:
+	docker-compose run --rm php-cli composer test
+
 api-cs-fix:
 	docker-compose run --rm php-cli composer php-cs-fixer fix
 

@@ -26,7 +26,8 @@
         "slim/twig-view": "^3.2",
         "symfony/http-foundation": "^5.2",
         "symfony/validator": "^5.2",
-        "webmozart/assert": "^1.10"
+        "webmozart/assert": "^1.10",
+        "ext-mbstring": "^8.0"
     },
 
     "require-dev": {
@@ -56,6 +57,8 @@
         "lint": "phplint",
         "php-cs-fixer": "php-cs-fixer --config=./.php_cs --allow-risky=yes",
         "psalm": "psalm --config=psalm.xml",
-        "app": "php bin/app.php --ansi"
+        "app": "php bin/app.php --ansi",
+        "test": "phpunit --colors=always",
+        "test-coverage": "XDEBUG_MODE=coverage phpunit --colors=always --coverage-html var/test/coverage"
     }
 }
