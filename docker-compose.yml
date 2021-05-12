@@ -54,9 +54,9 @@ services:
       APP_ENV: dev
       APP_DEBUG: 1
       DB_HOST: postgres
-      DB_USER: phonedir
+      DB_USER: admin
       DB_PASSWORD: 123456
-      DB_NAME: admin
+      DB_NAME: phonedir
       FRONTEND_URL: http://localhost:8080
 
   php-cli:
@@ -70,9 +70,9 @@ services:
       APP_ENV: dev
       APP_DEBUG: 1
       DB_HOST: postgres
-      DB_USER: phonedir
+      DB_USER: admin
       DB_PASSWORD: 123456
-      DB_NAME: admin
+      DB_NAME: phonedir
       FRONTEND_URL: http://localhost:8080
 
   postgres:

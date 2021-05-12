@@ -60,8 +60,7 @@ return [
     },
     'doctrine' => [
         'entity_path' => [
-            __DIR__ . '/../../src/Manage/Command/Entity',
-            __DIR__ . '/../../src/Auth/Entity',
+            __DIR__ . '/../../src/Upload/Entity',
         ],
         'dev_mode' => false,
         'proxy_dir' => __DIR__ . '/../../var/cache/proxies',
@@ -77,6 +76,7 @@ return [
             'charset' => 'utf-8',
         ],
         'types' => [
+            App\Upload\Entity\IdType::NAME => App\Upload\Entity\IdType::class
         ],
     ],
 ];

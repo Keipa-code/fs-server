@@ -8,6 +8,7 @@ use App\Flusher;
 use App\Upload\Entity\File;
 use App\Upload\Entity\FileRepository;
 use App\Upload\Entity\Id;
+use DateTimeImmutable;
 
 class Handler
 {
@@ -26,6 +27,7 @@ class Handler
         
         $file = new File(
             $id,
+            new DateTimeImmutable(),
             $command->filename,
             $command->size,
             $command->fileLink,

@@ -108,8 +108,6 @@ api-init() {
   permissions
   api-composer-install
   api-wait-db
-  api-migrations
-  api-fixtures
 }
 
 make-init() {

@@ -1,7 +1,7 @@
-FROM node:15-alpine
+FROM node:16-alpine
 
 RUN apk add --no-cache curl
 
 WORKDIR /var/www
 
-COPY --chown=node:node . .
+USER node

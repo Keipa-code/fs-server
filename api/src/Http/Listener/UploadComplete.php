@@ -9,16 +9,24 @@ use App\Upload\Command\UploadByTUS\Handler;
 class UploadComplete
 {
     private Handler $handler;
-    private Command $command;
 
-    public function __construct(Handler $handler, Command $command)
+    public function __construct(Handler $handler)
     {
         $this->handler = $handler;
-        $this->command = $command;
     }
 
-    public function handle(\TusPhp\Events\TusEvent $event)
+    public function handle(\TusPhp\Events\TusEvent $event): void
     {
-        $request = $event->getFile()->details();
+        /**
+         * @var array<string, string> $fileInfo
+         */
+        $fileInfo = $event->getFile()->details();
+        $command = new Command();
+        $command->filename = $fileInfo['name'] ?? '';
+        $command->size = $fileInfo['size'] ?? '';
+        $command->fileLink = $fileInfo['file_path'] ?? '';
+        $command->authorComment = $fileInfo['offset'] ?? '';
+        
+        $this->handler->handle($command);
     }
 }

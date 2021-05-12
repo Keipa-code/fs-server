@@ -3,18 +3,19 @@
 declare(strict_types=1);
 
 // use App\Console\FixturesLoadCommand;
+use App\Console\FixturesLoadCommand;
 use Doctrine\Migrations;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Command\SchemaTool;
 use Psr\Container\ContainerInterface;
 
 return [
-    //FixturesLoadCommand::class => static function (ContainerInterface $container) {
+    FixturesLoadCommand::class => static function (ContainerInterface $container) {
 /**
  * @psalm-suppress MixedArrayAccess
  * @psalm-var array{fixture_paths:string[]} $config
  */
-    /*        $config = $container->get('settings')['console'];
+    $config = $container->get('settings')['console'];
 
         return new FixturesLoadCommand(
             $container->get(EntityManagerInterface::class),
@@ -33,9 +34,8 @@ return [
                 Migrations\Tools\Console\Command\GenerateCommand::class,
             ],
             'fixture_paths' => [
-                __DIR__ . '/../../src/Manage/Fixture',
-                __DIR__ . '/../../src/Auth/Fixtures',
+                __DIR__ . '/../../src/Upload/Fixture',
             ]
         ],
-    ],*/
+    ],
 ];
