@@ -11,7 +11,6 @@ use Slim\Middleware\ErrorMiddleware;
 use Slim\Views\TwigMiddleware;
 
 return static function (App $app): void {
-    $app->add(SessionMiddleware::class);
     $app->add(TwigMiddleware::createFromContainer($app));
     $app->add(DomainExceptionHandler::class);
     $app->add(ValidationExceptionHandler::class);

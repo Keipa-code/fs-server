@@ -122,6 +122,10 @@
       <path value="$PROJECT_DIR$/api/vendor/doctrine/cache" />
       <path value="$PROJECT_DIR$/api/vendor/doctrine/collections" />
       <path value="$PROJECT_DIR$/api/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/api/vendor/dms/phpunit-arraysubset-asserts" />
+      <path value="$PROJECT_DIR$/api/vendor/middlewares/negotiation" />
+      <path value="$PROJECT_DIR$/api/vendor/middlewares/utils" />
+      <path value="$PROJECT_DIR$/api/vendor/willdurand/negotiation" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
