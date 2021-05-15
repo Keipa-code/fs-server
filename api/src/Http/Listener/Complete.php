@@ -6,7 +6,7 @@ namespace App\Http\Listener;
 use App\Upload\Command\UploadByTUS\Command;
 use App\Upload\Command\UploadByTUS\Handler;
 
-class UploadComplete
+class Complete
 {
     private Handler $handler;
 
