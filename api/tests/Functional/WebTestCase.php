@@ -34,15 +34,17 @@ abstract class WebTestCase extends TestCase
         return $request;
     }
 
-    protected static function jsonWithFile(string $method, string $path, UploadedFileInterface $file, array $body = []): ServerRequestInterface
+    protected static function jsonWithFile(string $method, string $path, $file, array $body = []): ServerRequestInterface
     {
         $request = (new ServerRequestFactory())->createServerRequest($method, $path)
-            ->withHeader('Accept', 'application/json')
-            ->withHeader('Content-Type', 'application/json')
+            //->withHeader('Accept', 'application/json')
+            //->withHeader('Content-Type', 'application/json')
+            ->withHeader('Tus-Resumable', '1.0.0')
+            ->withHeader('Upload-Length', '70')
             ->withUploadedFiles([
-                'files' => [$file]
+                'file' => $file
             ]);
-        $request->getBody()->write(json_encode($body, JSON_THROW_ON_ERROR));
+        //$request->getBody()->write(json_encode($body, JSON_THROW_ON_ERROR));
         return $request;
     }
 

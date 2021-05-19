@@ -5,17 +5,12 @@ ENV XDEBUG_VERSION 3.0.4
 RUN apk add --no-cache postgresql-dev bash coreutils git \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && git clone --branch $XDEBUG_VERSION --depth 1 https://github.com/xdebug/xdebug.git /usr/src/php/ext/xdebug \
+    && git clone --branch master --depth 1 https://github.com/krakjoe/apcu.git /usr/src/php/ext/apcu \
     && docker-php-ext-configure xdebug --enable-xdebug-dev \
-    && docker-php-ext-install pdo pdo_pgsql xdebug \
+    && docker-php-ext-install pdo pdo_pgsql xdebug apcu \
     && apk del git
     
 RUN apk add --no-cache unzip
-
-RUN apk add --no-cache \
-    oniguruma-dev \
-    && docker-php-ext-install mbstring \
-    && docker-php-ext-enable mbstring \
-    && rm -rf /tmp/*
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 

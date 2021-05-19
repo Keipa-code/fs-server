@@ -15,12 +15,13 @@ class TusTest extends WebTestCase
     {
         $realFile = (new UploadedFileFactory())->createUploadedFile(
             (new StreamFactory())->createStream(''),
-            0,
+            70,
             UPLOAD_ERR_OK,
         );
 
         $response = $this->app()->handle(self::jsonWithFile('POST', '/upload', $realFile));
 
         self::assertEquals(201, $response->getStatusCode());
+
     }
 }

@@ -1,8 +1,14 @@
+docker-build:
+	docker-compose build --pull
+
 api-test:
 	docker-compose run --rm php-cli composer test
 
 api-cs-fix:
 	docker-compose run --rm php-cli composer php-cs-fixer fix
+
+api-fixtures:
+	docker-compose run --rm php-cli composer app fixtures:load
 
 build: build-gateway build-frontend build-api
 

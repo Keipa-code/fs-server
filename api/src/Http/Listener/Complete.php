@@ -5,6 +5,8 @@ namespace App\Http\Listener;
 
 use App\Upload\Command\UploadByTUS\Command;
 use App\Upload\Command\UploadByTUS\Handler;
+use DomainException;
+use SpazzMarticus\Tus\Events\UploadComplete;
 
 class Complete
 {
@@ -15,17 +17,16 @@ class Complete
         $this->handler = $handler;
     }
 
-    public function handle(\TusPhp\Events\TusEvent $event): void
+    public function handle(UploadComplete $event): void
     {
-        /**
-         * @var array<string, string> $fileInfo
-         */
-        $fileInfo = $event->getFile()->details();
         $command = new Command();
-        $command->filename = $fileInfo['name'] ?? '';
-        $command->size = $fileInfo['size'] ?? '';
-        $command->fileLink = $fileInfo['file_path'] ?? '';
-        $command->authorComment = $fileInfo['offset'] ?? '';
+        if (!$event->getFile()->getFilename()) {
+            throw new DomainException('$event is empty');
+        }
+        $command->filename = $event->getFile()->getFilename() ?? '';
+        $command->size = $event->getFile()->getSize() ?? '';
+        $command->fileLink = $event->getFile()->getPathname() ?? '';
+        $command->authorComment = $event->getFile()->getLinkTarget() ?? '';
         
         $this->handler->handle($command);
     }
