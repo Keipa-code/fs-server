@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="PhpCSFixer">
+    <phpcsfixer_settings>
+      <PhpCSFixerConfiguration tool_path="$PROJECT_DIR$/api/vendor/bin/php-cs-fixer" />
+    </phpcsfixer_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/api/vendor/theseer/tokenizer" />
@@ -11,11 +16,9 @@
       <path value="$PROJECT_DIR$/api/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-intl-grapheme" />
-      <path value="$PROJECT_DIR$/api/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/http-foundation" />
@@ -43,11 +46,9 @@
       <path value="$PROJECT_DIR$/api/vendor/laminas/laminas-config-aggregator" />
       <path value="$PROJECT_DIR$/api/vendor/ramsey/uuid" />
       <path value="$PROJECT_DIR$/api/vendor/dnoegel/php-xdg-base-dir" />
-      <path value="$PROJECT_DIR$/api/vendor/predis/predis" />
       <path value="$PROJECT_DIR$/api/vendor/ramsey/collection" />
       <path value="$PROJECT_DIR$/api/vendor/php-di/php-di" />
       <path value="$PROJECT_DIR$/api/vendor/php-di/phpdoc-reader" />
-      <path value="$PROJECT_DIR$/api/vendor/nesbot/carbon" />
       <path value="$PROJECT_DIR$/api/vendor/php-di/invoker" />
       <path value="$PROJECT_DIR$/api/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/api/vendor/vimeo/psalm" />
@@ -67,7 +68,6 @@
       <path value="$PROJECT_DIR$/api/vendor/psr/log" />
       <path value="$PROJECT_DIR$/api/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/api/vendor/psr/http-server-handler" />
-      <path value="$PROJECT_DIR$/api/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/api/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/api/vendor/psr/container" />
       <path value="$PROJECT_DIR$/api/vendor/phpdocumentor/type-resolver" />
@@ -80,14 +80,10 @@
       <path value="$PROJECT_DIR$/api/vendor/php-cs-fixer/diff" />
       <path value="$PROJECT_DIR$/api/vendor/felixfbecker/language-server-protocol" />
       <path value="$PROJECT_DIR$/api/vendor/friendsofphp/php-cs-fixer" />
-      <path value="$PROJECT_DIR$/api/vendor/ankitpokhrel/tus-php" />
       <path value="$PROJECT_DIR$/api/vendor/felixfbecker/advanced-json-rpc" />
       <path value="$PROJECT_DIR$/api/vendor/webimpress/safe-writer" />
       <path value="$PROJECT_DIR$/api/vendor/netresearch/jsonmapper" />
-      <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/promises" />
-      <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/api/vendor/webmozart/path-util" />
-      <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/api/vendor/sebastian/version" />
       <path value="$PROJECT_DIR$/api/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/api/vendor/sebastian/resource-operations" />
@@ -126,6 +122,12 @@
       <path value="$PROJECT_DIR$/api/vendor/middlewares/negotiation" />
       <path value="$PROJECT_DIR$/api/vendor/middlewares/utils" />
       <path value="$PROJECT_DIR$/api/vendor/willdurand/negotiation" />
+      <path value="$PROJECT_DIR$/api/vendor/spazzmarticus/tus-server" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/var-exporter" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
@@ -201,5 +203,10 @@
     <phpunit_settings>
       <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/api/vendor/autoload.php" />
     </phpunit_settings>
+  </component>
+  <component name="Psalm">
+    <Psalm_settings>
+      <PsalmConfiguration tool_path="$PROJECT_DIR$/api/vendor/bin/psalm" />
+    </Psalm_settings>
   </component>
 </project>

@@ -25,7 +25,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./frontend:/var/www
-    command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && vue-cli-service serve"
+    command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && yarn vue-cli-service serve"
     tty: true
 
   frontend-node-cli:
