@@ -115,7 +115,6 @@ api-init() {
 make-init() {
   env-down-clear
   api-clear
-  cucumber-clear
   frontend-clear
   env-pull
   env-build
