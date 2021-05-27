@@ -19,7 +19,7 @@ docker-down-clear:
 docker-build:
 	docker-compose build --pull
 
-api-init: api-permission api-composer-install api-wait-db api-migrations
+api-init: api-permission api-composer-install api-migrations
 
 api-clear:
 	docker run --rm -v ${PWD}/api://var/www -w /var/www alpine sh -c 'rm -rf var/log/cli/* var/log/fpm-fcgi/* var/cache/*'
