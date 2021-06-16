@@ -5,13 +5,13 @@
       <a>FS-server</a>
     </section>
     <section class="down-button">
-      <a>FS-server</a>
+      <button>Загрузить</button>
     </section>
   </div>
   </header>
 </template>
-<style>
 
+<style>
 .box-header {
   box-shadow:0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
   transition:box-shadow 200ms linear
