@@ -1,0 +1,12 @@
+.welcome {
+    background: #282c34;
+}
+
+.welcome h1 {
+    text-align: center;
+    color: aqua;
+    font-weight: normal;
+    font-size: 1.8rem;
+    line-height: 1;
+    margin: 0 0 20px 0;
+}

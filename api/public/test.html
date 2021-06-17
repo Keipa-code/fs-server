@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link href="https://releases.transloadit.com/uppy/v1.29.1/uppy.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="drag-drop-area"></div>
+
+<script src="https://releases.transloadit.com/uppy/v1.29.1/uppy.min.js"></script>
+<script>
+  var uppy = Uppy.Core({
+    debug: true,
+    autoProceed: true,
+  })
+    .use(Uppy.Dashboard, {
+      inline: true,
+      target: '#drag-drop-area',
+      showLinkToFileUploadResult: true, //Disable if you don't allow GET-calls via Server
+    })
+    .use(Uppy.Tus, {
+      endpoint: '/upload',
+      autoRetry: false,
+      retryDelays: [0, 1000, 2000, 4000, 8000],
+      limit: 1,
+      removeFingerprintOnSuccess: true,
+    });
+</script>
+</body>
+</html>

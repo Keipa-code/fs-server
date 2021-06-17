@@ -4,15 +4,25 @@
 namespace App\Http\Action\AddFiles;
 
 
-use TusPhp\Tus\Server;
+
+use App\Http\Service\Tus;
 
 class RequestAction
 {
     private string $uploadDir = __DIR__ . '/../../../../var/uploadedFiles';
+    private Tus $tus;
+    private \Psr\Log\LoggerInterface $logger;
 
-    public function handle()
+    public function __construct(Tus $tus, \Psr\Log\LoggerInterface $logger)
     {
-        $tus = new Server;
-        $tus->setUploadDir($this->uploadDir);
+        $this->tus = $tus;
+        $this->logger = $logger;
+    }
+
+    public function handle(): Tus
+    {
+        $this->tus->setAllowGetCalls(true, null);
+        $this->tus->setLogger($this->logger);
+        return $this->tus;
     }
 }
