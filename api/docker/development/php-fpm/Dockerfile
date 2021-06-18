@@ -7,7 +7,7 @@ RUN apk add --no-cache postgresql-dev fcgi git \
     && git clone --branch $XDEBUG_VERSION --depth 1 https://github.com/xdebug/xdebug.git /usr/src/php/ext/xdebug \
     && git clone --branch master --depth 1 https://github.com/krakjoe/apcu.git /usr/src/php/ext/apcu \
     && docker-php-ext-configure xdebug --enable-xdebug-dev \
-    && docker-php-ext-install pdo pdo_pgsql xdebug apcu \
+    && docker-php-ext-install pdo pdo_pgsql exif xdebug apcu \
     && apk del git
 
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini

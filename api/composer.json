@@ -16,6 +16,7 @@
         "ext-mbstring": "^8.0",
         "doctrine/migrations": "^3.1",
         "doctrine/orm": "^2.8",
+        "james-heinrich/getid3": "^1.9",
         "laminas/laminas-config-aggregator": "^1.5",
         "middlewares/negotiation": "^2.0",
         "monolog/monolog": "^2.2",

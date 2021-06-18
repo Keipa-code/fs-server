@@ -28,38 +28,32 @@ class File
     /**
      * @ORM\Column
      */
-    private string $filesize;
+    private string $fileInfo;
     /**
      * @ORM\Column
      */
-    private string $fileLink;
+    private string $uuidLink;
     /**
      * @ORM\Column
      */
     private ?string $previewLink;
-    /**
-     * @ORM\Column
-     */
-    private string $authorComment;
 
     public function __construct(
         Id $id,
         DateTimeImmutable $date,
         string $filename,
-        string $filesize,
-        string $fileLink,
+        string $fileInfo,
+        string $uuidLink,
         ?string $previewLink,
-        string $authorComment,
     )
     {
 
         $this->id = $id;
         $this->date = $date;
         $this->filename = $filename;
-        $this->filesize = $filesize;
-        $this->fileLink = $fileLink;
+        $this->fileInfo = $fileInfo;
+        $this->uuidLink = $uuidLink;
         $this->previewLink = $previewLink ?? null;
-        $this->authorComment = $authorComment;
     }
 
     /**
@@ -85,23 +79,6 @@ class File
     {
         return $this->filename;
     }
-
-    /**
-     * @return string
-     */
-    public function getFilesize(): string
-    {
-        return $this->filesize;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFileLink(): string
-    {
-        return $this->fileLink;
-    }
-
     /**
      * @return string|null
      */
@@ -110,11 +87,4 @@ class File
         return $this->previewLink;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthorComment(): string
-    {
-        return $this->authorComment;
-    }
 }

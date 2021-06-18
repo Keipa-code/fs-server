@@ -18,10 +18,9 @@ class FileFixture extends AbstractFixture
             Id::generate(),
             new DateTimeImmutable(),
             'filename',
-            '1024',
-            'linkurl',
-            'previewLink',
-            'my comment'
+            json_encode(['size' => '1024', 'format' => 'linkurl']),
+            'Link',
+            'previeLink'
         );
 
         $manager->persist($file);

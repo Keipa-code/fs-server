@@ -28,7 +28,7 @@ api-composer-install:
 	docker-compose run --rm php-cli composer install
 
 api-permission:
-	docker run --rm -v ${PWD}/api://var/www -w /var/www alpine chmod 777 var/cache var/log/cli var/log/fpm-fcgi
+	docker run --rm -v ${PWD}/api://var/www -w /var/www alpine chmod 777 var/cache var/log/cli var/log/fpm-fcgi var/storage var/uploads
 
 api-wait-db:
 	docker-compose run --rm php-cli wait-for-it postgres:5432 -t 30

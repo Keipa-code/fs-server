@@ -10,13 +10,14 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
+use SpazzMarticus\Tus\Events\UploadComplete;
 use SpazzMarticus\Tus\Factories\FilenameFactoryInterface;
 use SpazzMarticus\Tus\Providers\LocationProviderInterface;
 use SpazzMarticus\Tus\TusServer;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Tus extends TusServer
 {
-    protected bool $allowGetCalls = true;
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,
@@ -35,5 +36,9 @@ class Tus extends TusServer
             $locationProvider);
     }
 
-
+    public function addCompleteListener($listener, $funcName) {
+        /** @var EventDispatcher $ed */
+        $ed = $this->eventDispatcher;
+        $ed->addListener(UploadComplete::class, [$listener, $funcName]);
+    }
 }
