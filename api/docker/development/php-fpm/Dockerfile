@@ -10,6 +10,10 @@ RUN apk add --no-cache postgresql-dev fcgi git \
     && docker-php-ext-install pdo pdo_pgsql exif xdebug apcu \
     && apk del git
 
+RUN apk add --no-cache libpng libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev  \
+    && docker-php-ext-install gd \
+    && apk del libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev
+
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 COPY ./common/php/conf.d /usr/local/etc/php/conf.d
 COPY ./common/php/php-fpm.d /usr/local/etc/php-fpm.d

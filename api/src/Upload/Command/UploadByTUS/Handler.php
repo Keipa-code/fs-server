@@ -29,12 +29,12 @@ class Handler
             $id,
             new DateTimeImmutable(),
             $command->filename,
-            $command->size,
-            $command->fileLink,
-            $command->authorComment,
-            $command->previewLink
+            $command->fileInfo,
+            $command->uuidLink,
+            $command->previewLink,
         );
-        
+
+
         $this->files->add($file);
         
         $this->flusher->flush();

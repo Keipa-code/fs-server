@@ -26,15 +26,15 @@ class File
      */
     private string $filename;
     /**
-     * @ORM\Column
+     * @ORM\Column(name="file_info")
      */
     private string $fileInfo;
     /**
-     * @ORM\Column
+     * @ORM\Column(name="uuid_link")
      */
     private string $uuidLink;
     /**
-     * @ORM\Column
+     * @ORM\Column(name="preview_link")
      */
     private ?string $previewLink;
 

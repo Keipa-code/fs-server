@@ -16,9 +16,6 @@ docker-pull:
 docker-down-clear:
 	docker-compose down -v --remove-orphans
 
-docker-build:
-	docker-compose build --pull
-
 api-init: api-permission api-composer-install api-migrations
 
 api-clear:

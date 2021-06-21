@@ -18,8 +18,23 @@ class FileRepository
         $this->repo = $repo;
     }
 
-    public function add(object $subscriber): void
+    public function add(object $file): void
     {
-        $this->em->persist($subscriber);
+        $this->em->persist($file);
+    }
+
+    public function find($value, $sort, $order, int $offset, int $limit): array
+    {
+        $qbp = $this->repo->createQueryBuilder('p');
+        return $qbp->select('p')
+            ->where($qbp->expr()->orX(
+                $qbp->expr()->like('LOWER(p.filename)', '?1'),
+                $qbp->expr()->like('LOWER(p.file_info)', '?1'),
+            ))
+            ->addOrderBy($sort, $order)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->setParameter(1, '%' . addcslashes($value, '%_') . '%')
+            ->getQuery()->getResult();
     }
 }

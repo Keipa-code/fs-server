@@ -12,5 +12,5 @@ return [
         $em = $container->get(EntityManagerInterface::class);
         $repo = $em->getRepository(File::class);
         return new FileRepository($em, $repo);
-    }
+    },
 ];

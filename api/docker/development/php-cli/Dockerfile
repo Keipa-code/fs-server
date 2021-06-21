@@ -9,6 +9,10 @@ RUN apk add --no-cache postgresql-dev bash coreutils git \
     && docker-php-ext-configure xdebug --enable-xdebug-dev \
     && docker-php-ext-install pdo pdo_pgsql exif xdebug apcu \
     && apk del git
+
+RUN apk add --no-cache libpng libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev  \
+    && docker-php-ext-install gd \
+    && apk del libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev
     
 RUN apk add --no-cache unzip
 

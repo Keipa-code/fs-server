@@ -31,15 +31,24 @@ class Complete
         if (!$event->getFile()->getFilename()) {
             throw new DomainException('$event is empty');
         }
-        $this->logger->warning($event->getUuid());
         $getID3 = new getID3;
-        $fileInfo = $getID3->analyze($event->getFile()->getPathname());
-        $command->filename = $event->getFile()->getFilename() ?? '';
-        $command->size = $event->getFile()->getSize() ?? '';
+        $fullInfo = $getID3->analyze($event->getFile()->getPathname());
+        $this->logger->warning($event->getFile()->getExtension());
+        $fileInfo = [
+            "size" => $event->getFile()->getSize() ?? '',
+            "fileFormat" => $fullInfo['fileformat'] ?? $event->getFile()->getExtension() ?? '',
+            "resolution" =>
+                $fullInfo["video"]["resolution_x"] && $fullInfo["video"]["resolution_y"]  ?
+                    $fullInfo["video"]["resolution_x"] .'x'. $fullInfo["video"]["resolution_y"] :
+                    '',
+            "codec" => $fullInfo["video"]["fourcc_lookup"]  ?? '',
+            "playTime" => $fullInfo["playtime_string"]  ?? '',
+        ];
 
-        $command->fileLink = $event->getFile()->getPathname() ?? '';
-        $command->authorComment = $fileInfo['fileformat'] ?? '';
-        
+        $command->filename = $event->getFile()->getFilename() ?? '';
+        $command->uuidLink = $event->getUuid() ?? '';
+        $command->fileInfo = json_encode($fileInfo, JSON_THROW_ON_ERROR);
+
         $this->handler->handle($command);
     }
 }

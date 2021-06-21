@@ -5,7 +5,7 @@
 alias php="docker-compose run --rm php-cli"
 alias node-cli="docker-compose run --rm frontend-node-cli"
 alias composer="docker-compose run --rm php-cli composer"
-alias app="docker-compose run --rm php-cli composer app"
+alias app="docker-compose run --rm php-cli php bin/app.php --ansi --no-interaction"
 alias linter="docker-compose run --rm php-cli composer lint"
 alias lint="linter && phpcs"
 alias test-e2e="api-fixtures && cucumber-clear && cucumber-e2e"
