@@ -37,4 +37,14 @@ class FileRepository
             ->setParameter(1, '%' . addcslashes($value, '%_') . '%')
             ->getQuery()->getResult();
     }
+
+    public function get($sort, $order, int $offset, int $limit)
+    {
+        $qb = $this->repo->createQueryBuilder('p');
+        return $qb->select('p')
+            ->addOrderBy($sort, $order)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()->getResult();
+    }
 }

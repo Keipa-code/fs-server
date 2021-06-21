@@ -27,13 +27,21 @@ class Handler
         if ($command->pageNumber > 1) {
             $offset = (int)$command->pageNumber * 20;
         }
-
-        return $this->files->find(
-            $command->searchValue,
+        if($command->searchValue) {
+            return $this->files->find(
+                $command->searchValue,
+                $command->sort,
+                $command->order,
+                $offset,
+                $command->rowCount,
+            );
+        }
+        return $this->files->get(
             $command->sort,
             $command->order,
             $offset,
             $command->rowCount,
         );
+
     }
 }

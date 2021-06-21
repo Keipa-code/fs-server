@@ -34,4 +34,12 @@ class Command
      * @Assert\Length(max=30, allowEmptyString=true)
      */
     public string $searchValue = '';
+
+    public function writeData($data) {
+        $this->searchValue = $data['searchValue'] ?? '';
+        $this->order = $data['order'] ?? 'DESC';
+        $this->sort = $data['sort'] ?? 'date';
+        $this->pageNumber = (int)$data['pageNumber'] ?? 1;
+        $this->rowCount = (int)$data['rowCount'] ?? 20;
+    }
 }

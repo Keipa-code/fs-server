@@ -3,12 +3,7 @@
 declare(strict_types=1);
 
 use App\Factory\TusFilenameFactory;
-use App\Http\Listener\Complete;
-use App\Http\Service\Tus;
-use App\Upload\Command\UploadByTUS\Handler;
-use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
 use Slim\Psr7\Factory\ResponseFactory;
@@ -26,29 +21,6 @@ use App\Upload\Command;
 
 
 return [
-    /*Tus::class => static function (ContainerInterface $container, Handler $handler) {
-        $uploadDirectory = __DIR__ . '/../../var/uploads/';
-        $cacheDirectory = __DIR__ . '/../../var/storage/';
-
-        $responseFactory = new ResponseFactory();
-        $streamFactory = new StreamFactory();
-        $logger = $container->get(\Psr\Log\LoggerInterface::class);
-        $storage = new PSR16cache(new ChainAdapter([new ApcuAdapter(), new FilesystemAdapter('', 0, $cacheDirectory)]));
-
-        $dispatcher = new EventDispatcher();
-        $listener = new Complete($handler, $container->get(\Psr\Log\LoggerInterface::class));
-        $dispatcher->addListener(UploadComplete::class, [$listener, 'handle']);
-        $filenameFactory = new TusFilenameFactory($uploadDirectory);
-
-        $locationProvider = new PathLocationProvider();
-
-        $tus = new Tus($responseFactory, $streamFactory, $storage, $dispatcher, $filenameFactory, $locationProvider);
-        $tus->setAllowGetCalls(true, null);
-        $tus->setLogger($container->get(\Psr\Log\LoggerInterface::class));
-        $tus->addCompleteListener($listener, 'handle');
-
-        return $tus;
-    },*/
     StreamFactoryInterface::class => static fn (): StreamFactoryInterface => new StreamFactory(),
     CacheInterface::class =>
         static fn (): CacheInterface =>

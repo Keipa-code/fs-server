@@ -8,4 +8,5 @@ use Slim\App;
 return static function (App $app): void {
     $app->get('/', Action\HomeAction::class);
     $app->any('/upload/[{id}]', Action\AddFiles\RequestAction::class);
+    $app->get('/thumbs/{id}', Action\GetThumbnail\RequestAction::class);
 };
