@@ -1,11 +1,11 @@
 import React from "react";
-import styles from './Welcome.module.css'
+import styles from './Home.module.css'
 
-class Welcome extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.welcome = React.createRef();
+    this.Home = React.createRef();
   }
   handleSubmit(event) {
     event.preventDefault();
@@ -14,20 +14,20 @@ class Welcome extends React.Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: this.welcome.current.files['0']
+      body: this.Home.current.files['0']
     }).then((response) => {})
       .then((success => console.log(success)))
       .catch((error) => {})
   }
   render() {
     return (
-      <div className={styles.welcome}>
+      <div className={styles.Home}>
         <h1>FS-Server</h1>
         <p>Мы скоро откроемся</p>
         <form onSubmit={this.handleSubmit}>
           <label>
             Upload file:
-            <input type="file" ref={this.welcome} />
+            <input type="file" ref={this.Home} />
           </label>
           <br />
           <button type="submit">Submit</button>
@@ -50,9 +50,9 @@ const handleSubmit = (event) => {
 }*/
 /*
 
-function Welcome() {
+function Home() {
 
 }
 */
 
-export default Welcome
+export default Home

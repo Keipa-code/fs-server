@@ -1,5 +1,5 @@
 import './App.css';
-import Welcome from './components/Welcome'
+import Home from './components/Home'
 import { BrowserRouter, Route, Switch} from "react-router-dom";
 import NotFound from "./Error/NotFound";
 
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <Welcome />
+          <Home />
         </Route>
         <Route path="*">
           <NotFound />
