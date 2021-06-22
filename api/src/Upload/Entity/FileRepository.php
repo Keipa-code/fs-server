@@ -47,4 +47,11 @@ class FileRepository
             ->setMaxResults($limit)
             ->getQuery()->getResult();
     }
+
+    public function getPathName($uuid): string
+    {
+        /** @var File $file */
+        $file = $this->repo->findOneByUuidLink($uuid);
+        return $file->getPathName();
+    }
 }

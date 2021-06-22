@@ -19,7 +19,7 @@ docker-down-clear:
 api-init: api-permission api-composer-install api-migrations
 
 api-clear:
-	docker run --rm -v ${PWD}/api://var/www -w /var/www alpine sh -c 'rm -rf var/log/cli/* var/log/fpm-fcgi/* var/cache/*'
+	docker run --rm -v ${PWD}/api://var/www -w /var/www alpine sh -c 'rm -rf var/log/cli/* var/log/fpm-fcgi/* var/cache/* var/upload/* var/thumbs/*'
 
 api-composer-install:
 	docker-compose run --rm php-cli composer install

@@ -6,26 +6,44 @@ declare(strict_types=1);
 namespace App\Http\Action\DownloadFile;
 
 
+use App\Upload\Command\GetPathName\Command;
+use App\Upload\Command\GetPathName\Handler;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Ramsey\Uuid\Uuid;
 use Slim\Psr7\Stream;
 use SpazzMarticus\Tus\Services\FileService;
 
 class RequestAction implements RequestHandlerInterface
 {
     private ResponseFactoryInterface $responseFactory;
-    private FileService $fileService;
+    private string $dir = '';
+    private Handler $handler;
+    private Command $command;
 
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(
+        ResponseFactoryInterface $responseFactory,
+        Handler $handler,
+        Command $command,
+    )
     {
         $this->responseFactory = $responseFactory;
-        $this->fileService = new FileService();
+        $this->dir = realpath(__DIR__.'/../../../../var');
+        $this->handler = $handler;
+        $this->command = $command;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $uuid = Uuid::fromString(str_replace(
+            '/upload/',
+            '',
+            $request->getUri()->getPath()
+        ));
+        $this->command->uuid = $uuid->toString();
+        $file = $this->handler->handle($this->command);
 
 
         $openFile = fopen($file, 'rb');

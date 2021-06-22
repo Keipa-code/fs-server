@@ -31,6 +31,7 @@ class Handler
             $command->filename,
             $command->fileInfo,
             $command->uuidLink,
+            $command->pathName,
             $command->previewLink,
         );
 

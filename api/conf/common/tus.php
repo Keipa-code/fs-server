@@ -32,7 +32,7 @@ return [
     EventDispatcherInterface::class => static fn (): EventDispatcherInterface => new EventDispatcher(),
     FilenameFactoryInterface::class =>
         static fn (): FilenameFactoryInterface =>
-        new TusFilenameFactory(__DIR__ . '/../../var/uploads/'),
+        new TusFilenameFactory(__DIR__ . '/../../var/upload/'),
     LocationProviderInterface::class => static fn (): LocationProviderInterface => new PathLocationProvider(),
 
 ];

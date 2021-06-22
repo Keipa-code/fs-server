@@ -48,6 +48,7 @@ class File
         string $filename,
         string $fileInfo,
         string $uuidLink,
+        string $pathName,
         ?string $previewLink,
     )
     {
@@ -57,6 +58,7 @@ class File
         $this->filename = $filename;
         $this->fileInfo = $fileInfo;
         $this->uuidLink = $uuidLink;
+        $this->pathName = $pathName;
         $this->previewLink = $previewLink ?? null;
     }
 
@@ -89,6 +91,14 @@ class File
     public function getPreviewLink(): ?string
     {
         return $this->previewLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathName(): string
+    {
+        return $this->pathName;
     }
 
 }

@@ -9,5 +9,6 @@ class Command
     public string $filename = '';
     public string $fileInfo = '';
     public string $uuidLink = '';
+    public string $pathName = '';
     public string $previewLink = '';
 }

@@ -9,14 +9,15 @@ use App\Upload\Helper\GetID;
 use DomainException;
 use getID3;
 use JsonException;
+use Psr\Log\LoggerInterface;
 use SpazzMarticus\Tus\Events\UploadComplete;
 
 class Complete
 {
     private Handler $handler;
-    private \Psr\Log\LoggerInterface $logger;
+    private LoggerInterface $logger;
 
-    public function __construct(Handler $handler, \Psr\Log\LoggerInterface $logger)
+    public function __construct(Handler $handler, LoggerInterface $logger)
     {
         $this->handler = $handler;
         $this->logger = $logger;
@@ -47,8 +48,11 @@ class Complete
 
         $command->filename = $event->getFile()->getFilename() ?? '';
         $command->uuidLink = $event->getUuid() ?? '';
+        $command->pathName = $event->getFile()->getPathname() ?? '';
         $command->fileInfo = json_encode($fileInfo, JSON_THROW_ON_ERROR);
-
+        if($event->getFile()->getExtension() == 'jpg' || 'jpeg' || 'png' || 'gif') {
+            $command->previewLink = '/thumbs/'.$event->getUuid();
+        }
         $this->handler->handle($command);
     }
 }

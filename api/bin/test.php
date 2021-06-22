@@ -18,8 +18,15 @@ require __DIR__ . '/../vendor/autoload.php';
 //$image->thumb(300,200);
 //$image->save(__DIR__.'/123.jpg' => 60);
 
-$uuid = Uuid::fromString('e2b3db3613fb4825b4e245dee17462c4');
+$uuid = Uuid::fromString(str_replace(
+    '/upload/',
+    '',
+    '/upload/9a9fad94-adbd-4183-b93b-e058d8de7b87'
+));
 
+$u1 = $uuid->getHex()->toString();
+
+$u2 = trim('/upload/9a9fad94-adbd-4183-b93b-e058d8de7b87',  '/upload/');
 //$file = new (__DIR__."/*.png");
 
-var_dump($uuid->toString());
+var_dump($u1);

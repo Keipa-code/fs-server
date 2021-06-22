@@ -12,8 +12,8 @@ class GetThumbnail extends WebTestCase
     {
         $response = $this->app()->handle(self::json(
             'GET',
-            '/thumbs/4444-4444',
-            ['filePath' => '/uploads/9a058e3585e74a10a35a87e40d41b4ce/Screenshot from 2021-02-12 15-12-22.png'],
+            '/thumbs/5018093d-193b-466f-8aaf-c6993a91dcf4',
+            ['filePath' => '/upload/5018093d193b466f8aafc6993a91dcf4/Screenshot from 2021-02-12 15-12-22.png'],
         ));
 
         $thumb = __DIR__.'/../../var/thumbs/4444-4444.jpg';
