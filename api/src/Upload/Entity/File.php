@@ -34,6 +34,10 @@ class File
      */
     private string $uuidLink;
     /**
+     * @ORM\Column(name="path_name")
+     */
+    private string $pathName;
+    /**
      * @ORM\Column(name="preview_link")
      */
     private ?string $previewLink;

@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Psr7\Stream;
 use SpazzMarticus\Tus\Services\FileService;
 
 class RequestAction implements RequestHandlerInterface
@@ -25,29 +26,30 @@ class RequestAction implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $this->createResponse(200)
-            ->withBody($this->streamFactory->createStreamFromFile($targetFile->getPathname()));
 
-        /**
-         * Filename currently not escaped
-         * @see https://stackoverflow.com/a/5677844
-         */
-        $response = $response->withHeader('Content-Length', (string)$this->fileService->size($targetFile))
-            ->withHeader('Content-Disposition', 'attachment; filename="' . $targetFile->getFilename() . '"')
-            ->withHeader('Content-Transfer-Encoding', 'binary');
 
-        if (isset($storage['metadata']['type'])) {
-            $response = $response->withHeader('Content-Type', $storage['metadata']['type']);
-        }
+        $openFile = fopen($file, 'rb');
+        $stream = new Stream($openFile);
+        $response = $this->createResponse();
 
-        return $response;
+        return $response
+            ->withHeader('Content-Length', filesize($file))
+            ->withHeader('Content-Disposition', 'attachment; filename="' . basename($file) . '"')
+            ->withBody($stream);
+
     }
 
     protected function createResponse(int $code = 200, ResponseInterface $response = null): ResponseInterface
     {
         $response = $response ? $response->withStatus($code) : $this->responseFactory->createResponse($code);
         return $response
-            ->withHeader('Cache-Control', 'no-store')
-            ->withHeader('Tus-Resumable', '1.0.0');
+            ->withHeader('Content-Type', 'application/force-download')
+            ->withHeader('Content-Type', 'application/octet-stream')
+            ->withHeader('Content-Type', 'application/download')
+            ->withHeader('Content-Description', 'File Transfer')
+            ->withHeader('Content-Transfer-Encoding', 'binary')
+            ->withHeader('Expires', '0')
+            ->withHeader('Cache-Control', 'must-revalidate')
+            ->withHeader('Pragma', 'public');
     }
 }
