@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './Home.module.css'
+import DropZone from "./Uppy/Uppy";
 
 class Home extends React.Component {
   constructor(props) {
@@ -32,6 +33,9 @@ class Home extends React.Component {
           <br />
           <button type="submit">Submit</button>
         </form>
+        <div>
+          <DropZone />
+        </div>
       </div>
     )
   }
