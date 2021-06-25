@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Home.module.css'
-import UppyComp from './Uppy/Uppy'
+import Dropzone from './Uppy/Dropzone'
 
 class Home extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class Home extends React.Component {
         <h1>FS-Server</h1>
         <p>Мы скоро откроемся</p>
         <div>
-          <UppyComp />
+          <Dropzone />
         </div>
       </div>
     )
