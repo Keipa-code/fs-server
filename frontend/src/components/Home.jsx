@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Home.module.css'
-import DropZone from "./Uppy/Uppy";
+import UppyComp from './Uppy/Uppy'
 
 class Home extends React.Component {
   constructor(props) {
@@ -25,16 +25,8 @@ class Home extends React.Component {
       <div className={styles.Home}>
         <h1>FS-Server</h1>
         <p>Мы скоро откроемся</p>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Upload file:
-            <input type="file" ref={this.Home} />
-          </label>
-          <br />
-          <button type="submit">Submit</button>
-        </form>
         <div>
-          <DropZone />
+          <UppyComp />
         </div>
       </div>
     )

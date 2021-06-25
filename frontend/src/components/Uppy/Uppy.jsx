@@ -1,15 +1,25 @@
 import React from 'react'
+import '@uppy/core/dist/style.css'
+import '@uppy/dashboard/dist/style.css'
+
 const Uppy = require('@uppy/core')
 const Tus = require('@uppy/tus')
-const { DashboardModal, useUppy } = require('@uppy/react')
+const { DashboardModal } = require('@uppy/react')
 
-function DropZone () {
-    const uppy = useUppy(() => {
-        return new Uppy()
-            .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files' })
-    })
+class UppyComp extends React.Component {
+    constructor (props) {
+        super(props)
+        this.uppy = Uppy()
+          .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files' })
+    }
 
-    return <DashboardModal uppy={uppy} />
+    componentWillUnmount () {
+        this.uppy.close()
+    }
+
+    render () {
+        return <DashboardModal uppy={this.uppy} />
+    }
 }
 
-export default DropZone
+export default UppyComp
