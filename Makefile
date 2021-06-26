@@ -7,8 +7,15 @@ init-ci: docker-down-clear \
 docker-up:
 	docker-compose up -d
 
+docker-down:
+	docker-compose down --remove-orphans
+
 docker-build:
 	docker-compose build --pull
+
+docker-rebuild: docker-build docker-down docker-up
+
+docker-restart: docker-down docker-up
 
 docker-pull:
 	docker-compose pull
@@ -25,7 +32,7 @@ api-composer-install:
 	docker-compose run --rm php-cli composer install
 
 api-permission:
-	docker run --rm -v ${PWD}/api://var/www -w /var/www alpine chmod 777 var/cache var/log/cli var/log/fpm-fcgi var/storage var/upload
+	docker run --rm -v ${PWD}/api://var/www -w /var/www alpine chmod 777 var/cache var/log/cli var/log/fpm-fcgi var/storage var/upload var/thumbs
 
 api-wait-db:
 	docker-compose run --rm php-cli wait-for-it postgres:5432 -t 30

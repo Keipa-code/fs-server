@@ -2031,6 +2031,11 @@
     "@uppy/utils" "^3.6.1"
     preact "8.2.9"
 
+"@uppy/locales@^1.20.1":
+  version "1.20.1"
+  resolved "https://registry.yarnpkg.com/@uppy/locales/-/locales-1.20.1.tgz#23ea1c524f9f249a42068aa0d41168478d6bb3c3"
+  integrity sha512-2wKk44E52IkPv0KRwfDkzSIAcwCvUjnvhCDDmmH4d5PVZbc0Nu4fcKXiXOev3qmVTU8vArpAUPMLQLn6SS+fqw==
+
 "@uppy/progress-bar@^1.3.29":
   version "1.3.29"
   resolved "https://registry.yarnpkg.com/@uppy/progress-bar/-/progress-bar-1.3.29.tgz#440d49cab7a4d6593ac9934f39c96525cc201a6a"

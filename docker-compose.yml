@@ -21,8 +21,6 @@ services:
   frontend-node:
     build:
       context: frontend/docker/development/node
-    environment:
-      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./frontend:/var/www
     command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && yarn start"
@@ -58,6 +56,7 @@ services:
       DB_PASSWORD: 123456
       DB_NAME: phonedir
       FRONTEND_URL: http://localhost:8080
+      FRONTEND_HOST: localhost:8080
 
   php-cli:
     build:

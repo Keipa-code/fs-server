@@ -1,12 +1,35 @@
 .home {
     background: #282c34;
+    display: flex;
 }
 
 .home h1 {
-    text-align: center;
+    text-align: left;
     color: aqua;
     font-weight: normal;
     font-size: 1.8rem;
     line-height: 1;
-    margin: 0 0 20px 0;
+    padding: 10px 10px 10px 0;
+    margin: 0 0 20px 20px;
+}
+
+.home form{
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698956-icon-111-search-512.png);
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width .4s ease-in-out;
+    transition: width .4s ease-in-out;
+}
+
+.dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
