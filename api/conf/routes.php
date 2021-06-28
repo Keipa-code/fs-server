@@ -12,7 +12,7 @@ return static function (App $app): void {
         $group->map(['POST', 'DELETE', 'PATCH', 'PUT', 'OPTIONS'], '[{id}]', Action\AddFiles\RequestAction::class);
         $group->get('[{id}]', Action\DownloadFile\RequestAction::class);
     });
-    //$app->any('/upload/[{id}]', Action\AddFiles\RequestAction::class);
+    $app->post('/find', Action\FindFiles\RequestAction::class);
 
     $app->get('/thumbs/{id}', Action\GetThumbnail\RequestAction::class);
 };
