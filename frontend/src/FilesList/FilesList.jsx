@@ -1,27 +1,43 @@
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import "./FilesList.css";
+import getRowCount from "./GetRowCount";
+import api from "../Api/Api";
+import URLQueryEncode from "../Api/URLQueryEncode";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
 }
 
 function FilesList() {
+  const query = useQuery()
   const [errors, setErrors] = useState('')
   const [formData, setFormData] = useState('')
-  const [queryString, setQueryString] = useState({
+  const [queryParams, setQueryParams] = useState({
     query: formData,
-    sort: '',
-    order: '',
-    page: '',
+    sort: query.get("sort") ? query.get("sort") : null,
+    order: query.get("order") ? query.get("order") : null,
+    page: query.get("page") ? query.get("page") : null,
   })
-  const query = useQuery()
+  const [rowCount, setRowCount] = useState(null)
+  const [rowFetched, setRowFetched] = useState(false)
+  const [tableData, setTableData] = useState(null)
   let previewLink = "/var/www/frontend/public/logo192.png"
   let downloadLink = "#"
 
+  useEffect(() => {
+    if(rowFetched === false){
+      setRowCount(getRowCount(formData ? { formData } : null))
+      setRowFetched(true)
+    }
+  })
+
+  if(query.get("query") && !formData){
+    setFormData(query.get("query"))
+  }
 
   const handleSelectChange = (event) => {
-    setQueryString({
+    setQueryParams({
       sort: event.target.name,
       order: event.target.value,
     })
@@ -35,6 +51,20 @@ function FilesList() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    
+    setErrors({})
+    
+    const queryString = '?' + URLQueryEncode(
+      'query' + queryParams.query + '&'
+      + queryParams.sort ? ('sort=' +  queryParams.sort) : '' + '&'
+      + queryParams.order ? ('order=' +  queryParams.order) : '' + '&'
+      + queryParams.page ? ('page=' +  queryParams.page) : ''
+    )
+    api.get('/api/find' + queryString)
+      .then((data) => {
+        setTableData(data)
+        setRowFetched(false)
+      })
   }
 
   return (
