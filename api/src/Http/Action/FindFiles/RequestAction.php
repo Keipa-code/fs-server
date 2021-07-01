@@ -31,7 +31,7 @@ class RequestAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $data = $request->getParsedBody();
+        $data = $request->getUri()->getQuery();
         $this->command->writeData($data);
         return new JsonResponse($this->handler->handle($this->command));
     }

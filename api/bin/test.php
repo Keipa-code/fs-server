@@ -14,19 +14,6 @@ use Symfony\Component\Cache\Psr16Cache;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-//$image = new Thumb(__DIR__ . '/123.png');
-//$image->thumb(300,200);
-//$image->save(__DIR__.'/123.jpg' => 60);
+$value = htmlspecialchars("123%25!~`()*\|\\");
 
-$uuid = Uuid::fromString(str_replace(
-    '/upload/',
-    '',
-    '/upload/9a9fad94-adbd-4183-b93b-e058d8de7b87'
-));
-
-$u1 = $uuid->getHex()->toString();
-
-$u2 = trim('/upload/9a9fad94-adbd-4183-b93b-e058d8de7b87',  '/upload/');
-//$file = new (__DIR__."/*.png");
-
-var_dump($u1);
+var_dump($value);

@@ -33,10 +33,10 @@ class Command
     /**
      * @Assert\Length(max=30, allowEmptyString=true)
      */
-    public string $searchValue = '';
+    public string $query = '';
 
     public function writeData($data) {
-        $this->searchValue = $data['searchValue'] ?? '';
+        $this->query = $data['search'] ?? '';
         $this->order = $data['order'] ?? 'DESC';
         $this->sort = $data['sort'] ?? 'date';
         $this->pageNumber = (int)$data['pageNumber'] ?? 1;

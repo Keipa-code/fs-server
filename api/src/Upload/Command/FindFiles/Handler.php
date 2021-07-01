@@ -27,9 +27,9 @@ class Handler
         if ($command->pageNumber > 1) {
             $offset = (int)$command->pageNumber * 20;
         }
-        if($command->searchValue) {
+        if($command->query) {
             return $this->files->find(
-                $command->searchValue,
+                $command->query,
                 $command->sort,
                 $command->order,
                 $offset,

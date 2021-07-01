@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Dropzone from './Uppy/Dropzone'
 import api from "../Api/Api";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
+import URLQueryEncode from "../Api/URLQueryEncode";
 
 function Home() {
   const [formData, setFormData] = useState({
@@ -9,8 +10,9 @@ function Home() {
   })
 
   const [errors, setErrors] = useState({})
-
-
+  const [submitted, setSubmitted] = useState(false)
+  const [data, setData] = useState('')
+  const [path, setPath] = useState('')
 
   const handleChange = (event) => {
     setFormData({
@@ -21,14 +23,17 @@ function Home() {
   const handleSubmit = (event) => {
     event.preventDefault()
     setErrors({})
-    api
-      .post('/find', {
+
+    setPath("?query=" + URLQueryEncode(formData.searchValue))
+    setSubmitted(true)
+ /*   api
+      .get(path, {
         searchValue: formData.searchValue
       })
       .then((response) => {
-        if(response.ok) {
-          return <Redirect to="/search" push={false} />
-        }
+          setSubmitted(true)
+          setData(response)
+
       })
 
       .catch(async (error) => {
@@ -36,37 +41,44 @@ function Home() {
           const data = await error.json()
           setErrors(data.errors)
         }
-      })
+      })*/
+  }
+  console.log(submitted)
+  if(submitted) {
+    return <Redirect push to={{
+      pathname: "/search/",
+      search: path,
+    }}/>
   }
 
   return (
     <div>
       <div className="container-fluid bg-primary d-flex">
         <h1 className="text-light p-2 bd-highlight">FS-Server</h1>
-        <form className="form row g-3 ms-auto p-2 bd-highlight" method="post" onSubmit={handleSubmit}>
+        <form className="form row g-3 ms-auto p-2 bd-highlight" onSubmit={handleSubmit}>
           <div className="col-auto">
-          <input
-            className="form-control mt-2 col-3"
-            id="searchValue"
-            name="searchValue"
-            type="search"
-            placeholder="Поиск"
-            value={formData.searchValue}
-            onChange={handleChange}
-          />
-          {errors.search ? (
-            <div className="input-error">
-              {errors.search}
-            </div>
-          ) : null}
+            <input
+              className="form-control mt-2 col-3"
+              id="searchValue"
+              name="searchValue"
+              type="search"
+              placeholder="Поиск"
+              value={formData.searchValue}
+              onChange={handleChange}
+            />
+            {errors.search ? (
+              <div className="input-error">
+                {errors.search}
+              </div>
+            ) : null}
           </div>
           <div className="col-auto">
-          <button type="submit" className="mt-2 p-2 bd-highlight btn btn-secondary">Поиск</button>
+            <button type="submit" className="mt-2 p-2 bd-highlight btn btn-secondary">Поиск</button>
           </div>
         </form>
       </div>
       <div className="offset-xl-3 col-md-6">
-        <Dropzone />
+        <Dropzone/>
       </div>
     </div>
   )

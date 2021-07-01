@@ -1,12 +1,31 @@
+import isJsonResponse from "./isJsonResponse";
+
 function request(url, method, data, headers){
-  return fetch('/api' + url, {
+  const common = {
     method,
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json',
       ...headers,
     },
-    body: JSON.stringify(data),
+  }
+
+  const body =
+    data !== null
+      ? {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      }
+      : {headers: {}}
+
+  return fetch('/api' + url, {
+    ...common,
+    ...body,
+    headers: {
+      ...common.headers,
+      ...body.headers,
+    },
   })
     .then((response) => {
       if (response.ok) {
@@ -15,8 +34,7 @@ function request(url, method, data, headers){
       throw response
     })
     .then((response) => {
-      const type = response.headers.get('content-type')
-      if (type && type.includes('application/json')) {
+      if(isJsonResponse(response)){
         return response.json()
       }
       return response.text()

@@ -29,9 +29,9 @@ class FileRepository
         return $qbp->select('p')
             ->where($qbp->expr()->orX(
                 $qbp->expr()->like('LOWER(p.filename)', '?1'),
-                $qbp->expr()->like('LOWER(p.file_info)', '?1'),
+                $qbp->expr()->like('LOWER(p.fileInfo)', '?1'),
             ))
-            ->addOrderBy($sort, $order)
+            ->addOrderBy('p.'.$sort, $order)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->setParameter(1, '%' . addcslashes($value, '%_') . '%')
@@ -42,7 +42,7 @@ class FileRepository
     {
         $qb = $this->repo->createQueryBuilder('p');
         return $qb->select('p')
-            ->addOrderBy($sort, $order)
+            ->addOrderBy('p.'.$sort, $order)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
