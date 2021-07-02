@@ -9,9 +9,9 @@ function useQuery() {
   return new URLSearchParams(useLocation().search)
 }
 
-function FilesList() {
+function BrowseFiles() {
   const query = useQuery()
-  const [errors, setErrors] = useState('')
+  const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState('')
   const [queryParams, setQueryParams] = useState({
     query: formData,
@@ -24,7 +24,6 @@ function FilesList() {
   const [tableData, setTableData] = useState(null)
   let previewLink = "/var/www/frontend/public/logo192.png"
   let downloadLink = "#"
-
   useEffect(() => {
     if(rowFetched === false){
       setRowCount(getRowCount(formData ? { formData } : null))
@@ -38,15 +37,14 @@ function FilesList() {
 
   const handleSelectChange = (event) => {
     setQueryParams({
+      ...queryParams,
       sort: event.target.name,
       order: event.target.value,
     })
   }
 
   const handleFormChange = (event) => {
-    setFormData({
-      [event.target.name]: event.target.value
-    })
+    setFormData(event.target.value)
   }
 
   const handleSubmit = (event) => {
@@ -63,7 +61,15 @@ function FilesList() {
     api.get('/api/find' + queryString)
       .then((data) => {
         setTableData(data)
+        console.log(data.length)
         setRowFetched(false)
+      })
+      .catch(async (e) => {
+        if( e.status === 422) {
+          const data = await e.json()
+          return data.errors
+        }
+        return {}
       })
   }
 
@@ -102,6 +108,7 @@ function FilesList() {
         </div>
 
       </div>
+
       <div className="container border mt-4 p-3">
         <h3 className="align-content-start">Filename</h3>
         {previewLink ? (<img className="my-3" src={previewLink} alt="123"/>) : null}
@@ -140,4 +147,4 @@ function FilesList() {
   )
 }
 
-export default FilesList
+export default BrowseFiles

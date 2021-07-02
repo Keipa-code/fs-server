@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {createContext} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import FileStore from "./store/FileStore";
 //import reportWebVitals from './reportWebVitals';
+
+export const Context = createContext(null)
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Context.Provider value={{
+      file: new FileStore()
+    }}>
+      <App/>
+    </Context.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

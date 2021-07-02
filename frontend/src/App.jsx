@@ -1,6 +1,6 @@
 import './App.css';
-import Home from './components/Home'
-import FindList from './FilesList/FilesList'
+import Home from './Home/Home'
+import FindList from './BrowseFiles/FilesList'
 import { BrowserRouter, Route, Switch} from "react-router-dom";
 import NotFound from "./Error/NotFound";
 
