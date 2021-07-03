@@ -10,15 +10,18 @@ use App\Flusher;
 use App\Upload\Entity\File;
 use App\Upload\Entity\FileRepository;
 use App\Upload\Entity\Id;
+use Psr\Log\LoggerInterface;
 
 class Handler
 {
 
     private FileRepository $files;
+    private LoggerInterface $logger;
 
-    public function __construct(FileRepository $files)
+    public function __construct(FileRepository $files, LoggerInterface $logger)
     {
         $this->files = $files;
+        $this->logger = $logger;
     }
 
     public function handle(Command $command): array
@@ -28,20 +31,25 @@ class Handler
             $offset = (int)$command->pageNumber * 20;
         }
         if($command->query) {
-            return $this->files->find(
+
+            $list = $this->files->find(
                 $command->query,
                 $command->sort,
                 $command->order,
                 $offset,
                 $command->rowCount,
             );
+            //$this->logger->warning(implode('',$list));
+            return $list;
         }
-        return $this->files->get(
+        $list = $this->files->get(
             $command->sort,
             $command->order,
             $offset,
             $command->rowCount,
         );
+        //$this->logger->warning(json_encode($list));
+        return $list;
 
     }
 }

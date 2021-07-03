@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from 'react'
 import Dropzone from './Uppy/Dropzone'
-import api from "../Api/Api";
-import {Redirect} from "react-router-dom";
-import URLQueryEncode from "../Api/URLQueryEncode";
+import { Redirect } from 'react-router-dom'
+import URLQueryEncode from '../Api/URLQueryEncode'
 
 function Home() {
   const [formData, setFormData] = useState({
@@ -11,12 +10,11 @@ function Home() {
 
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
-  const [data, setData] = useState('')
   const [path, setPath] = useState('')
 
   const handleChange = (event) => {
     setFormData({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     })
   }
 
@@ -24,9 +22,9 @@ function Home() {
     event.preventDefault()
     setErrors({})
 
-    setPath("?query=" + URLQueryEncode(formData.searchValue))
+    setPath('?query=' + URLQueryEncode(formData.searchValue))
     setSubmitted(true)
- /*   api
+    /*   api
       .get(path, {
         searchValue: formData.searchValue
       })
@@ -41,21 +39,29 @@ function Home() {
           const data = await error.json()
           setErrors(data.errors)
         }
-      })*/
+      }) */
   }
   console.log(submitted)
-  if(submitted) {
-    return <Redirect push to={{
-      pathname: "/search/",
-      search: path,
-    }}/>
+  if (submitted) {
+    return (
+      <Redirect
+        push
+        to={{
+          pathname: '/search/',
+          search: path,
+        }}
+      />
+    )
   }
 
   return (
     <div>
       <div className="container-fluid bg-primary d-flex">
         <h1 className="text-light p-2 bd-highlight">FS-Server</h1>
-        <form className="form row g-3 ms-auto p-2 bd-highlight" onSubmit={handleSubmit}>
+        <form
+          className="form row g-3 ms-auto p-2 bd-highlight"
+          onSubmit={handleSubmit}
+        >
           <div className="col-auto">
             <input
               className="form-control mt-2 col-3"
@@ -67,18 +73,21 @@ function Home() {
               onChange={handleChange}
             />
             {errors.search ? (
-              <div className="input-error">
-                {errors.search}
-              </div>
+              <div className="input-error">{errors.search}</div>
             ) : null}
           </div>
           <div className="col-auto">
-            <button type="submit" className="mt-2 p-2 bd-highlight btn btn-secondary">Поиск</button>
+            <button
+              type="submit"
+              className="mt-2 p-2 bd-highlight btn btn-secondary"
+            >
+              Поиск
+            </button>
           </div>
         </form>
       </div>
       <div className="offset-xl-3 col-md-6">
-        <Dropzone/>
+        <Dropzone />
       </div>
     </div>
   )

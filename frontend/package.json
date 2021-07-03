@@ -20,12 +20,34 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10"
+    "@testing-library/user-event": "^12.1.10",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest-dom": "^3.6.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "eslint-plugin-testing-library": "^4.3.0",
+    "prettier": "^2.0.4",
+    "react-test-renderer": "^17.0.1",
+    "stylelint": "^13.3.0",
+    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-prettier": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "eslint": "eslint --ext .js,.jsx src",
+    "eslint-fix": "eslint --fix --ext .js,.jsx src",
+    "stylelint": "stylelint \"src/**/*.css\"",
+    "prettier": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
   "eslintConfig": {
     "extends": [

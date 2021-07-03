@@ -1,5 +1,4 @@
-import React from 'react';
-import {makeAutoObservable} from 'mobx';
+import { makeAutoObservable } from 'mobx'
 
 export default class FileStore {
   constructor() {
@@ -7,35 +6,47 @@ export default class FileStore {
     this._totalCount = 0
     this._page = 1
     this._limit = 20
+    this._sorting = ''
     makeAutoObservable(this)
   }
 
   get limit() {
-    return this._limit;
+    return this._limit
   }
 
-  set limit(value) {
-    this._limit = value;
+  setLimit(value) {
+    this._limit = value
   }
+
   get page() {
-    return this._page;
+    return this._page
   }
 
-  set page(value) {
-    this._page = value;
+  setPage(value) {
+    this._page = value
   }
+
   get totalCount() {
-    return this._totalCount;
+    return this._totalCount
   }
 
-  set totalCount(value) {
-    this._totalCount = value;
+  setTotalCount(value) {
+    this._totalCount = value
   }
+
   get files() {
-    return this._files;
+    return this._files
   }
 
-  set files(value) {
-    this._files = value;
+  setFiles(value) {
+    this._files = value
+  }
+
+  get sorting() {
+    return this._sort
+  }
+
+  setSorting(value) {
+    this._sort = value
   }
 }

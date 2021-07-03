@@ -1,81 +1,92 @@
-import React, {useState, useEffect} from "react";
-import {useLocation} from "react-router-dom";
-import "./FilesList.css";
-import getRowCount from "./GetRowCount";
-import api from "../Api/Api";
-import URLQueryEncode from "../Api/URLQueryEncode";
+import React, { useState, useEffect, useContext } from 'react'
+import { useLocation, useHistory } from 'react-router-dom'
+import './BrowseFiles.css'
+import api from '../Api/Api'
+import URLQueryEncode from '../Api/URLQueryEncode'
+import { Context } from '../index'
+import Pages from '../components/Pages'
+import FilesList from '../components/FilesList'
+import Selector from '../components/Selector'
+import { observer } from 'mobx-react-lite'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
 }
 
-function BrowseFiles() {
+const BrowseFiles = observer(() => {
+  const { file } = useContext(Context)
   const query = useQuery()
-  const [errors, setErrors] = useState({})
+  const history = useHistory()
   const [formData, setFormData] = useState('')
-  const [queryParams, setQueryParams] = useState({
-    query: formData,
-    sort: query.get("sort") ? query.get("sort") : null,
-    order: query.get("order") ? query.get("order") : null,
-    page: query.get("page") ? query.get("page") : null,
-  })
-  const [rowCount, setRowCount] = useState(null)
-  const [rowFetched, setRowFetched] = useState(false)
-  const [tableData, setTableData] = useState(null)
-  let previewLink = "/var/www/frontend/public/logo192.png"
-  let downloadLink = "#"
-  useEffect(() => {
-    if(rowFetched === false){
-      setRowCount(getRowCount(formData ? { formData } : null))
-      setRowFetched(true)
-    }
-  })
+  const [errors, setErrors] = useState({})
+  const [submitted, setSubmitted] = useState(false)
 
-  if(query.get("query") && !formData){
-    setFormData(query.get("query"))
-  }
-
-  const handleSelectChange = (event) => {
-    setQueryParams({
-      ...queryParams,
-      sort: event.target.name,
-      order: event.target.value,
-    })
+  if (!submitted) {
+    api
+      .get(
+        '/find' +
+          (query.get('query') !== null ? '?query=' + query.get('query') : '') +
+          (file.sorting !== undefined ? file.sorting : '')
+      )
+      .then((data) => {
+        file.setFiles(data)
+      })
+    setFormData(query.get('query'))
+    setSubmitted(true)
   }
 
   const handleFormChange = (event) => {
     setFormData(event.target.value)
+    console.log(query.get('query'))
   }
+
+  useEffect(() => {
+    if (file.sorting !== undefined) {
+      api
+        .get(
+          '/find' +
+            (query.get('query') !== null
+              ? '?query=' + query.get('query')
+              : '') +
+            file.sorting
+        )
+        .then((data) => {
+          file.setFiles(data)
+        })
+    }
+  }, [file.sorting, file.page])
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    
+
     setErrors({})
-    
-    const queryString = '?' + URLQueryEncode(
-      'query' + queryParams.query + '&'
-      + queryParams.sort ? ('sort=' +  queryParams.sort) : '' + '&'
-      + queryParams.order ? ('order=' +  queryParams.order) : '' + '&'
-      + queryParams.page ? ('page=' +  queryParams.page) : ''
+    file.setFiles([])
+
+    history.push(
+      '/search' +
+        ('?query=' + URLQueryEncode(formData)) +
+        (file.sorting !== undefined ? file.sorting : '')
     )
-    api.get('/api/find' + queryString)
+
+    /* api.get('/find' + ((query.get("query")!==null) ? query.get("query") : '' ) + file.sorting)
       .then((data) => {
-        setTableData(data)
-        console.log(data.length)
-        setRowFetched(false)
+        file.setFiles(data)
       })
-      .catch(async (e) => {
-        if( e.status === 422) {
-          const data = await e.json()
-          return data.errors
-        }
-        return {}
+*/
+    api
+      .post('/getrowcount', {
+        query: formData,
       })
+      .then((data) => {
+        file.setTotalCount(data)
+      })
+
+    setSubmitted(false)
   }
 
   return (
     <div className="container">
-      <h3 className="my-xl-4">Результаты по запросу: {query.get("query")}</h3>
+      <h3 className="my-xl-4">Результаты по запросу: {query.get('query')}</h3>
       <div className="row justify-content-center">
         <form className="d-flex" onSubmit={handleSubmit}>
           <input
@@ -88,63 +99,22 @@ function BrowseFiles() {
             onChange={handleFormChange}
           />
           {errors.search ? (
-            <div className="input-error">
-              {errors.search}
-            </div>
+            <div className="input-error">{errors.search}</div>
           ) : null}
-          <button type="submit" className="btn btn-secondary p-2 m-2 bd-highlight">Поиск</button>
-
+          <button
+            type="submit"
+            className="btn btn-secondary p-2 m-2 bd-highlight"
+          >
+            Поиск
+          </button>
         </form>
-        <div className="d-flex flex-row bd-highlight mt-5">
-          <select className="form-select w-auto" onChange={handleSelectChange}>
-            <option selected disabled>Сортировка</option>
-            <option name="date" value="DESC">Сначала новые</option>
-            <option name="date" value="ASC">Сначала старые</option>
-            <option name="name" value="ASC">По названию файла (А-Я)</option>
-            <option name="name" value="DESC">По названию файла (Я-А)</option>
-            <option name="size" value="ASC">По размеру файла (возрастание)</option>
-            <option name="size" value="DESC">По размеру файла (уменьшение)</option>
-          </select>
-        </div>
-
+        <Selector />
       </div>
 
-      <div className="container border mt-4 p-3">
-        <h3 className="align-content-start">Filename</h3>
-        {previewLink ? (<img className="my-3" src={previewLink} alt="123"/>) : null}
-        <table className="table table-striped table-hover table-bordered">
-          <tbody>
-          <tr className="d-flex flex-wrap">
-            <td className="col-2 p-2 flex-fill bd-highlight">Формат файла</td>
-            <td className="col-2 p-2 flex-fill bd-highlight">Jpeg</td>
-          </tr>
-          </tbody>
-        </table>
-        <div className="file-info border">
-          <div>
-            <b>Пароль 123.rar</b>
-            <i className="nowrap">(836,3 КБ)</i>
-          </div>
-          <div className="file-info__time">
-            Загружен
-            <time dateTime="2020-09-24 15:15:34 UTC"> 9 месяцев назад</time>
-          </div>
-        </div>
-        <a className="btn-primary btn mt-3" href={downloadLink}>Скачать</a>
-      </div>
-
-      <nav className="mt-2 mb-5" aria-label="Page navigation">
-        <ul className="pagination">
-          <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-          <li className="page-item"><a className="page-link" href="#">1</a></li>
-          <li className="page-item"><a className="page-link" href="#">2</a></li>
-          <li className="page-item"><a className="page-link" href="#">3</a></li>
-          <li className="page-item"><a className="page-link" href="#">4</a></li>
-          <li className="page-item"><a className="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
+      <FilesList />
+      <Pages />
     </div>
   )
-}
+})
 
 export default BrowseFiles

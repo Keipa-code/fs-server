@@ -14,6 +14,8 @@ use Symfony\Component\Cache\Psr16Cache;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$value = htmlspecialchars("123%25!~`()*\|\\");
+$test = '1';
+$test1 = 1;
 
-var_dump($value);
+var_dump(json_encode($test));
+var_dump(json_encode($test1));

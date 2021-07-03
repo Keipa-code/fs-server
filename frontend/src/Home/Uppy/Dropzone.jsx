@@ -1,6 +1,6 @@
 /* eslint-disable */
-import "@uppy/core/dist/style.css";
-import "@uppy/dashboard/dist/style.css";
+import '@uppy/core/dist/style.css'
+import '@uppy/dashboard/dist/style.css'
 const React = require('react')
 const Uppy = require('@uppy/core')
 const Tus = require('@uppy/tus')
@@ -20,9 +20,8 @@ class Dropzone extends React.Component {
       id: 'uppy',
       autoProceed: true,
       debug: true,
-      locale: Russian
-    })
-      .use(Tus, {endpoint: '/api/upload/', limit: 10})
+      locale: Russian,
+    }).use(Tus, { endpoint: '/api/upload/', limit: 10 })
     let test = this.uppy.getState()
     test.files
   }
@@ -33,15 +32,13 @@ class Dropzone extends React.Component {
 
   render() {
     return (
-        <Dashboard
-          uppy={this.uppy}
-          metaFields={[
-            {id: 'name', name: 'Name', placeholder: 'File name'}
-          ]}
-          showLinkToFileUploadResult={false}
-          proudlyDisplayPoweredByUppy={false}
-          uploadComplete={() => console.log('work it')}
-        />
+      <Dashboard
+        uppy={this.uppy}
+        metaFields={[{ id: 'name', name: 'Name', placeholder: 'File name' }]}
+        showLinkToFileUploadResult={false}
+        proudlyDisplayPoweredByUppy={false}
+        uploadComplete={() => console.log('work it')}
+      />
     )
   }
 }

@@ -14,5 +14,7 @@ return static function (App $app): void {
     });
     $app->get('/find', Action\FindFiles\RequestAction::class);
 
+    $app->post('/getrowcount', Action\GetTotalRowCount\RequestAction::class);
+
     $app->get('/thumbs/{id}', Action\GetThumbnail\RequestAction::class);
 };

@@ -1,10 +1,10 @@
-import api from '../Api/Api';
+import api from '../Api/Api'
 
 function GetRowCount(searchValue = null) {
-
-  api.post('/api/count', {
-    search: searchValue,
-  })
+  api
+    .post('/api/count', {
+      search: searchValue,
+    })
     .then((data) => {
       return data.count
     })

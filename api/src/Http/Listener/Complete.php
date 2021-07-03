@@ -50,7 +50,13 @@ class Complete
         $command->uuidLink = $event->getUuid() ?? '';
         $command->pathName = $event->getFile()->getPathname() ?? '';
         $command->fileInfo = json_encode($fileInfo, JSON_THROW_ON_ERROR);
-        if($event->getFile()->getExtension() == 'jpg' || 'jpeg' || 'png' || 'gif') {
+        if(
+            $fileInfo['fileFormat'] == 'jpg' ||
+            $fileInfo['fileFormat'] == 'jpeg' ||
+            $fileInfo['fileFormat'] == 'png' ||
+            $fileInfo['fileFormat'] == 'gif'
+        )
+        {
             $command->previewLink = '/thumbs/'.$event->getUuid();
         }
         $this->handler->handle($command);

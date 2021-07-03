@@ -3,22 +3,21 @@
 declare(strict_types=1);
 
 
-namespace App\Http\Action\FindFiles;
+namespace App\Http\Action\GetTotalRowCount;
 
 
 use App\Http\JsonResponse;
-use App\Upload\Command\FindFiles\Command;
-use App\Upload\Command\FindFiles\Handler;
+use App\Upload\Command\GetTotalRowCount\Command;
+use App\Upload\Command\GetTotalRowCount\Handler;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use App\Upload\Command\GetTotalRowCount\Handler as RowHandler;
-use Psr\Log\LoggerInterface;
 
 class RequestAction implements RequestHandlerInterface
 {
-
     private Handler $handler;
     private Command $command;
 
@@ -29,12 +28,14 @@ class RequestAction implements RequestHandlerInterface
     }
 
     /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
      * @throws JsonException
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $data = $request->getQueryParams();
-        $this->command->writeData($data);
-        return new JsonResponse($this->handler->handle($this->command));
+        $data = $request->getParsedBody();
+        $this->command->query = $data['query'] ?? '';
+        return new JsonResponse((int)$this->handler->handle($this->command));
     }
 }

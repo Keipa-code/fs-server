@@ -1,6 +1,6 @@
-import isJsonResponse from "./isJsonResponse";
+import isJsonResponse from './isJsonResponse'
 
-function request(url, method, data, headers){
+function request(url, method, data, headers) {
   const common = {
     method,
     headers: {
@@ -16,8 +16,8 @@ function request(url, method, data, headers){
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
-      }
-      : {headers: {}}
+        }
+      : { headers: {} }
 
   return fetch('/api' + url, {
     ...common,
@@ -34,7 +34,7 @@ function request(url, method, data, headers){
       throw response
     })
     .then((response) => {
-      if(isJsonResponse(response)){
+      if (isJsonResponse(response)) {
         return response.json()
       }
       return response.text()
@@ -43,7 +43,7 @@ function request(url, method, data, headers){
 
 const api = {
   get: (url, headers = {}) => request(url, 'GET', null, headers),
-  post: (url, data = null, headers = {}) => request(url, 'POST', data, headers)
+  post: (url, data = null, headers = {}) => request(url, 'POST', data, headers),
 }
 
 export default api

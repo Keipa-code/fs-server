@@ -36,10 +36,10 @@ class Command
     public string $query = '';
 
     public function writeData($data) {
-        $this->query = $data['search'] ?? '';
+        $this->query = $data['query'] ?? '';
         $this->order = $data['order'] ?? 'DESC';
         $this->sort = $data['sort'] ?? 'date';
-        $this->pageNumber = (int)$data['pageNumber'] ?? 1;
-        $this->rowCount = (int)$data['rowCount'] ?? 20;
+        $this->pageNumber = isset($data['page']) ? (int)$data['page'] : 1;
+        $this->rowCount = isset($data['rowCount']) ? (int)$data['rowCount'] : 20;
     }
 }

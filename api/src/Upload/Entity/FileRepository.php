@@ -6,6 +6,8 @@ namespace App\Upload\Entity;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 class FileRepository
 {
@@ -25,17 +27,14 @@ class FileRepository
 
     public function find($value, $sort, $order, int $offset, int $limit): array
     {
-        $qbp = $this->repo->createQueryBuilder('p');
-        return $qbp->select('p')
-            ->where($qbp->expr()->orX(
-                $qbp->expr()->like('LOWER(p.filename)', '?1'),
-                $qbp->expr()->like('LOWER(p.fileInfo)', '?1'),
-            ))
+        $qb = $this->repo->createQueryBuilder('p');
+        return $qb->select('p')
+            ->where($qb->expr()->like('LOWER(p.filename)', '?1'))
             ->addOrderBy('p.'.$sort, $order)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->setParameter(1, '%' . addcslashes($value, '%_') . '%')
-            ->getQuery()->getResult();
+            ->getQuery()->getArrayResult();
     }
 
     public function get($sort, $order, int $offset, int $limit)
@@ -45,7 +44,7 @@ class FileRepository
             ->addOrderBy('p.'.$sort, $order)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
-            ->getQuery()->getResult();
+            ->getQuery()->getArrayResult();
     }
 
     public function getPathName($uuid): string
@@ -53,5 +52,26 @@ class FileRepository
         /** @var File $file */
         $file = $this->repo->findOneByUuidLink($uuid);
         return $file->getPathName();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getRowCount($query = null)
+    {
+        $qb = $this->repo->createQueryBuilder('p');
+        if($query == null) {
+            return $qb->select('p')
+                ->select('count(p.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+        return $qb->select('p')
+            ->where($qb->expr()->like('LOWER(p.filename)', '?1'))
+            ->select('count(p.id)')
+            ->setParameter(1, '%' . addcslashes($query, '%_') . '%')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
