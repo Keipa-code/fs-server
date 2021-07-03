@@ -37,7 +37,6 @@ const BrowseFiles = observer(() => {
 
   const handleFormChange = (event) => {
     setFormData(event.target.value)
-    console.log(query.get('query'))
   }
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const BrowseFiles = observer(() => {
           file.setFiles(data)
         })
     }
-  }, [file.sorting, file.page])
+  }, [file.sorting, file.page, query, file])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -68,11 +67,6 @@ const BrowseFiles = observer(() => {
         (file.sorting !== undefined ? file.sorting : '')
     )
 
-    /* api.get('/find' + ((query.get("query")!==null) ? query.get("query") : '' ) + file.sorting)
-      .then((data) => {
-        file.setFiles(data)
-      })
-*/
     api
       .post('/getrowcount', {
         query: formData,
@@ -86,7 +80,7 @@ const BrowseFiles = observer(() => {
 
   return (
     <div className="container">
-      <h3 className="my-xl-4">Результаты по запросу: {query.get('query')}</h3>
+      <h3 className="my-4">Результаты по запросу: {query.get('query')}</h3>
       <div className="row justify-content-center">
         <form className="d-flex" onSubmit={handleSubmit}>
           <input
@@ -103,7 +97,7 @@ const BrowseFiles = observer(() => {
           ) : null}
           <button
             type="submit"
-            className="btn btn-secondary p-2 m-2 bd-highlight"
+            className="btn btn-primary p-2 m-2 bd-highlight"
           >
             Поиск
           </button>

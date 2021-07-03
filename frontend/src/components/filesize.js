@@ -1,11 +1,11 @@
 export function sizeString(size) {
   if (size < 1024) {
-    return '(' + size + ' байт' + ')'
+    return '(' + size + ' байт)'
   }
   if (size < 1024 * 1024) {
-    return '(' + Math.ceil(size / 1024) + ' кб' + ')'
+    return '(' + Math.ceil(size / 1024) + ' кб)'
   }
   if (size < 1024 * 1024 * 1024) {
-    return '(' + Math.ceil((size / 1024) * 1024) + ' мб' + ')'
+    return '(' + Math.ceil((size / 1024) * 1024) + ' мб)'
   }
 }

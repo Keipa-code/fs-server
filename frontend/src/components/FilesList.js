@@ -10,7 +10,7 @@ const FilesList = observer(() => {
   return (
     <Row className="d-flex">
       {file.files.map((file) => (
-        <FileItem key={file.filename} file={file} />
+        <FileItem key={file.uuidLink} file={file} />
       ))}
     </Row>
   )
