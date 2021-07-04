@@ -7,7 +7,9 @@ const FileItem = ({ file }) => {
   return (
     <div className="container border mt-4 p-3">
       <h3 className="align-content-start my-3">{file.filename}</h3>
-      {file.previewLink ? <Image width={300} src={'/api' + file.previewLink} /> : null}
+      {file.previewLink ? (
+        <Image width={300} src={'/api' + file.previewLink} />
+      ) : null}
       <table className="table table-striped table-hover table-bordered">
         <tbody>
           <tr className="d-flex flex-wrap mt-3">

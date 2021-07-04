@@ -14,7 +14,6 @@
     "require": {
         "php": "^8.0",
         "ext-mbstring": "^8.0",
-        "ext-gd": "^8.0",
         "doctrine/migrations": "^3.1",
         "doctrine/orm": "^2.8",
         "james-heinrich/getid3": "^1.9",

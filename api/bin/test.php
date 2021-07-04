@@ -12,10 +12,9 @@ use Symfony\Component\Cache\Adapter\ChainAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Psr16Cache;
 
+
 require __DIR__ . '/../vendor/autoload.php';
 
-$test = '1';
-$test1 = 1;
+$file = __DIR__.'../var/thumbs/6a7361de-39c5-4c8a-999d-d10684ee106a.jpg';
 
-var_dump(json_encode($test));
-var_dump(json_encode($test1));
+$file1 = imageCreateFromJpeg($file);

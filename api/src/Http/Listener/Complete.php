@@ -3,11 +3,13 @@
 
 namespace App\Http\Listener;
 
+use App\Factory\Thumb;
 use App\Upload\Command\UploadByTUS\Command;
 use App\Upload\Command\UploadByTUS\Handler;
-use App\Upload\Helper\GetID;
 use DomainException;
+use Exception;
 use getID3;
+use InvalidArgumentException;
 use JsonException;
 use Psr\Log\LoggerInterface;
 use SpazzMarticus\Tus\Events\UploadComplete;
@@ -16,6 +18,9 @@ class Complete
 {
     private Handler $handler;
     private LoggerInterface $logger;
+    private string $dir = '/var/www/var/';
+    private int $thumbWidth = 300;
+    private int $thumbHeight = 200;
 
     public function __construct(Handler $handler, LoggerInterface $logger)
     {
@@ -25,6 +30,7 @@ class Complete
 
     /**
      * @throws JsonException
+     * @throws Exception
      */
     public function handle(UploadComplete $event): void
     {
@@ -58,6 +64,13 @@ class Complete
         )
         {
             $command->previewLink = '/thumbs/'.$event->getUuid();
+            $sourceFile = $command->pathName;
+            if(!is_file($sourceFile)) {
+                throw new InvalidArgumentException("Source file not found");
+            }
+            $image = new Thumb($sourceFile);
+            $image->thumb($this->thumbWidth, $this->thumbHeight);
+            $image->save($this->dir.$command->previewLink.'.jpg', 60);
         }
         $this->handler->handle($command);
     }
