@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-
 namespace App\Upload\Command\GetPathName;
-
 
 use App\Upload\Entity\FileRepository;
 
-class Handler
+final class Handler
 {
     private FileRepository $files;
 

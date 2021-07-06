@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Upload\Entity;
 
@@ -50,9 +51,7 @@ class File
         string $uuidLink,
         string $pathName,
         ?string $previewLink,
-    )
-    {
-
+    ) {
         $this->id = $id;
         $this->date = $date;
         $this->filename = $filename;
@@ -62,43 +61,28 @@ class File
         $this->previewLink = $previewLink ?? null;
     }
 
-    /**
-     * @return Id
-     */
     public function getId(): Id
     {
         return $this->id;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getDate(): DateTimeImmutable
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
     public function getFilename(): string
     {
         return $this->filename;
     }
-    /**
-     * @return string|null
-     */
+
     public function getPreviewLink(): ?string
     {
         return $this->previewLink;
     }
 
-    /**
-     * @return string
-     */
     public function getPathName(): string
     {
         return $this->pathName;
     }
-
 }

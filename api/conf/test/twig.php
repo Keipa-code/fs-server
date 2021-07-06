@@ -7,5 +7,5 @@ return [
         'twig' => [
             'cache' => __DIR__ . '/../../var/cache/' . PHP_SAPI . '/twig',
         ],
-    ]
+    ],
 ];

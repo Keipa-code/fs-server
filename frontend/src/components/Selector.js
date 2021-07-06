@@ -3,37 +3,35 @@ import { observer } from 'mobx-react-lite'
 import { Context } from '../index'
 
 const Selector = observer(() => {
-  const DATE = '&sort=date'
-  const FILENAME = '&sort=filename'
-  const SIZE = '&sort=size'
-  const ASC = '&order=ASC'
-  const DESC = '&order=DESC'
-
   const { file } = useContext(Context)
   return (
     <div className="d-flex flex-row bd-highlight mt-5">
       <select
         className="form-select w-auto"
         onChange={(event) => {
-          file.setSorting(event.target.name + event.target.value)
+          file.setSorting({
+            sort: event.target.value.split(' ')[0],
+            order: event.target.value.split(' ')[1],
+          })
+          file.setSubmitted(false)
         }}
       >
-        <option defaultValue={true} name={DATE} value={DESC}>
+        <option defaultValue={true} name="date" value="date DESC">
           Сначала новые
         </option>
-        <option name={DATE} value={ASC}>
+        <option name="date" value="date ASC">
           Сначала старые
         </option>
-        <option name={FILENAME} value={ASC}>
+        <option name="filename" value="filename ASC">
           По названию файла (А-Я)
         </option>
-        <option name={FILENAME} value={DESC}>
+        <option name="filename" value="filename DESC">
           По названию файла (Я-А)
         </option>
-        <option name={SIZE} value={ASC}>
+        <option name="size" value="size ASC">
           По размеру файла (возрастание)
         </option>
-        <option name={SIZE} value={DESC}>
+        <option name="size" value="size DESC">
           По размеру файла (уменьшение)
         </option>
       </select>

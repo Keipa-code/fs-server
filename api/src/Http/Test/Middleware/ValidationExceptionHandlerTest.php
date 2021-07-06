@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Http\Test\Middleware;
-
 
 use App\Http\Middleware\ValidationExceptionHandler;
 use App\Http\Validator\ValidationException;
@@ -20,11 +18,11 @@ use Symfony\Component\Validator\ConstraintViolationList;
  *
  * @internal
  */
-class ValidationExceptionHandlerTest extends TestCase
+final class ValidationExceptionHandlerTest extends TestCase
 {
-    public function testNormal()
+    public function testNormal(): void
     {
-        $middleware = new ValidationExceptionHandler;
+        $middleware = new ValidationExceptionHandler();
 
         $handler = $this->createStub(RequestHandlerInterface::class);
         $handler->method('handle')->willReturn($source = (new ResponseFactory())->createResponse());
@@ -35,9 +33,9 @@ class ValidationExceptionHandlerTest extends TestCase
         self::assertEquals($source, $response);
     }
 
-    public function testException()
+    public function testException(): void
     {
-        $middleware = new ValidationExceptionHandler;
+        $middleware = new ValidationExceptionHandler();
 
         $violations = new ConstraintViolationList([
             new ConstraintViolation('Incorrect Email', null, [], null, 'email', 'not-email'),

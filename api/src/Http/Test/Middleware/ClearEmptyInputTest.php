@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Http\Test\Middleware;
-
 
 use App\Http\Middleware\ClearEmptyInput;
 use PHPUnit\Framework\TestCase;

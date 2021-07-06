@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-
 namespace App\Upload\Command\GetTotalRowCount;
-
 
 use App\Upload\Entity\FileRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
-class Handler
+final class Handler
 {
     private FileRepository $files;
 

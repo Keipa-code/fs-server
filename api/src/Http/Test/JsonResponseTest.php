@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Http\Test;
-
 
 use App\Http\JsonResponse;
 use JsonException;
@@ -14,7 +12,7 @@ use stdClass;
 /**
  * @internal
  */
-class JsonResponseTest extends TestCase
+final class JsonResponseTest extends TestCase
 {
     public function testWithCode(): void
     {

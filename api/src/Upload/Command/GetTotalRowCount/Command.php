@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-
 namespace App\Upload\Command\GetTotalRowCount;
 
-
-class Command
+final class Command
 {
     public string $query = '';
 }

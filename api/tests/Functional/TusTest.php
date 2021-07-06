@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-
 namespace Test\Functional;
-
 
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Factory\UploadedFileFactory;
 
-class TusTest extends WebTestCase
+/**
+ * @internal
+ */
+final class TusTest extends WebTestCase
 {
-    public function testUploadSuccess()
+    public function testUploadSuccess(): void
     {
         $realFile = (new UploadedFileFactory())->createUploadedFile(
             (new StreamFactory())->createStream(''),
@@ -22,6 +23,5 @@ class TusTest extends WebTestCase
         $response = $this->app()->handle(self::jsonWithFile('POST', '/upload', $realFile));
 
         self::assertEquals(201, $response->getStatusCode());
-
     }
 }

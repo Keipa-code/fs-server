@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Upload\Test\Unit\File\File;
-
 
 use App\Upload\Entity\File;
 use App\Upload\Entity\Id;
@@ -12,7 +10,10 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
-class UploadByTus extends TestCase
+/**
+ * @internal
+ */
+final class UploadByTus extends TestCase
 {
     public function testSuccess(): void
     {

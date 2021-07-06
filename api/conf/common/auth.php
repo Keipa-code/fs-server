@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 
 return [
-    FileRepository::class => function (ContainerInterface $container): FileRepository {
+    FileRepository::class => static function (ContainerInterface $container): FileRepository {
         $em = $container->get(EntityManagerInterface::class);
         $repo = $em->getRepository(File::class);
         return new FileRepository($em, $repo);

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Http\Action\AddFiles;
-
 
 use App\Http\Listener\Complete;
 use App\Http\Service\Tus;
@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 
-class RequestAction implements RequestHandlerInterface
+final class RequestAction implements RequestHandlerInterface
 {
     private Tus $tus;
     private LoggerInterface $logger;
@@ -22,8 +22,7 @@ class RequestAction implements RequestHandlerInterface
         Tus $tus,
         Handler $handler,
         LoggerInterface $logger,
-    )
-    {
+    ) {
         $this->tus = $tus;
         $this->handler = $handler;
         $this->logger = $logger;

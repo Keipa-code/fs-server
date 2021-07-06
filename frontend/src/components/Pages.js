@@ -18,9 +18,10 @@ const Pages = observer(() => {
         <Pagination.Item
           key={page}
           active={file.page === page}
+          activeLabel={''}
           onClick={() => {
             file.setPage(page)
-            file.setSorting(file.sorting + '&page=' + page)
+            file.setSubmitted(false)
           }}
         >
           {page}

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Http\Action\FindFiles;
-
 
 use App\Http\JsonResponse;
 use App\Upload\Command\FindFiles\Command;
@@ -13,12 +11,9 @@ use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use App\Upload\Command\GetTotalRowCount\Handler as RowHandler;
-use Psr\Log\LoggerInterface;
 
-class RequestAction implements RequestHandlerInterface
+final class RequestAction implements RequestHandlerInterface
 {
-
     private Handler $handler;
     private Command $command;
 

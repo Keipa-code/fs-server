@@ -5,8 +5,9 @@ export default class FileStore {
     this._files = []
     this._totalCount = 0
     this._page = 1
-    this._limit = 20
+    this._limit = 5
     this._sorting = ''
+    this._submitted = false
     makeAutoObservable(this)
   }
 
@@ -43,10 +44,19 @@ export default class FileStore {
   }
 
   get sorting() {
-    return this._sort
+    return this._sorting
   }
 
   setSorting(value) {
-    this._sort = value
+    this.setPage(1)
+    this._sorting = value
+  }
+
+  get submitted() {
+    return this._submitted
+  }
+
+  setSubmitted(value) {
+    this._submitted = value
   }
 }

@@ -13,6 +13,7 @@
     },
     "require": {
         "php": "^8.0",
+        "ext-gd": "^8.0",
         "ext-mbstring": "^8.0",
         "doctrine/migrations": "^3.1",
         "doctrine/orm": "^2.8",
@@ -38,6 +39,7 @@
         "dms/phpunit-arraysubset-asserts": "^0.3.0",
         "doctrine/data-fixtures": "^1.5",
         "friendsofphp/php-cs-fixer": "^3.0",
+        "jetbrains/phpstorm-attributes": "^1.0",
         "lctrs/psalm-psr-container-plugin": "^1.1",
         "overtrue/phplint": "^2.0",
         "phpunit/phpunit": "^9.5",
@@ -61,7 +63,7 @@
     },
     "scripts": {
         "lint": "phplint",
-        "php-cs-fixer": "php-cs-fixer --config=./.php_cs --allow-risky=yes",
+        "php-cs-fixer": "php-cs-fixer --config=./.php-cs-fixer.php --allow-risky=yes",
         "psalm": "psalm --config=psalm.xml",
         "app": "php bin/app.php --ansi",
         "test": "phpunit --colors=always",

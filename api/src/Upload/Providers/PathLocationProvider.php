@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Upload\Providers;
-
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
@@ -14,9 +12,8 @@ use Ramsey\Uuid\UuidInterface;
 use SpazzMarticus\Tus\Providers\AbstractLocationProvider;
 use SpazzMarticus\Tus\Providers\LocationProviderInterface;
 
-class PathLocationProvider extends AbstractLocationProvider implements LocationProviderInterface
+final class PathLocationProvider extends AbstractLocationProvider implements LocationProviderInterface
 {
-
     public function provideLocation(UuidInterface $uuid, ServerRequestInterface $request): UriInterface
     {
         $uri = $request->getUri();

@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Upload\Entity;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
-class FileRepository
+final class FileRepository
 {
     private EntityManagerInterface $em;
     private EntityRepository $repo;
@@ -30,7 +30,7 @@ class FileRepository
         $qb = $this->repo->createQueryBuilder('p');
         return $qb->select('p')
             ->where($qb->expr()->like('LOWER(p.filename)', '?1'))
-            ->addOrderBy('p.'.$sort, $order)
+            ->addOrderBy('p.' . $sort, $order)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->setParameter(1, '%' . addcslashes($value, '%_') . '%')
@@ -41,7 +41,7 @@ class FileRepository
     {
         $qb = $this->repo->createQueryBuilder('p');
         return $qb->select('p')
-            ->addOrderBy('p.'.$sort, $order)
+            ->addOrderBy('p.' . $sort, $order)
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()->getArrayResult();
@@ -55,13 +55,14 @@ class FileRepository
     }
 
     /**
+     * @param mixed|null $query
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
     public function getRowCount($query = null)
     {
         $qb = $this->repo->createQueryBuilder('p');
-        if($query == null) {
+        if ($query === null) {
             return $qb->select('p')
                 ->select('count(p.id)')
                 ->getQuery()

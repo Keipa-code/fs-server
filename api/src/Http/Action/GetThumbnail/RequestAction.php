@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Http\Action\GetThumbnail;
-
 
 use App\Factory\Thumb;
 use Exception;
@@ -15,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Stream;
 
-class RequestAction implements RequestHandlerInterface
+final class RequestAction implements RequestHandlerInterface
 {
     private int $thumbWidth = 300;
     private int $thumbHeight = 200;
@@ -32,11 +30,17 @@ class RequestAction implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $file = $this->dir . $request->getUri()->getPath().'.jpg';
-        if(!is_file($file)) {
-            $sourceFile = $this->dir.$request->getParsedBody()['filePath'];
-            if(!is_file($sourceFile)) {
-                throw new InvalidArgumentException("Source file not found");
+        $file = $this->dir . $request->getUri()->getPath() . '.jpg';
+        /**
+         * @psalm-var array {
+         * filePath:string
+         * } $data
+         */
+        $data = $request->getParsedBody();
+        if (!is_file($file)) {
+            $sourceFile = $this->dir . $data['filePath'];
+            if (!is_file($sourceFile)) {
+                throw new InvalidArgumentException('Source file not found');
             }
             $image = new Thumb($sourceFile);
             $image->thumb($this->thumbWidth, $this->thumbHeight);
@@ -51,12 +55,11 @@ class RequestAction implements RequestHandlerInterface
             ->withHeader('Content-Length', filesize($file))
             ->withHeader('Content-Disposition', 'attachment; filename="' . basename($file) . '"')
             ->withBody($stream);
-
     }
 
-    protected function createResponse(int $code = 200, ResponseInterface $response = null): ResponseInterface
+    private function createResponse(): ResponseInterface
     {
-        $response = $response ? $response->withStatus($code) : $this->responseFactory->createResponse($code);
+        $response = $this->responseFactory->createResponse(200);
         return $response
             ->withHeader('Content-Type', 'application/force-download')
             ->withHeader('Content-Type', 'application/octet-stream')
@@ -68,4 +71,3 @@ class RequestAction implements RequestHandlerInterface
             ->withHeader('Pragma', 'public');
     }
 }
-

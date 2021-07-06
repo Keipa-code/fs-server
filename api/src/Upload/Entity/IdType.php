@@ -7,7 +7,7 @@ namespace App\Upload\Entity;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
 
-class IdType extends GuidType
+final class IdType extends GuidType
 {
     public const NAME = 'file_id';
 

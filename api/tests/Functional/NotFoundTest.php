@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Test\Functional;
-
 
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 

@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-
 namespace App\Upload\Command\FindFiles;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Command
+final class Command
 {
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(max=4, allowEmptyString=true)
      * @Assert\Choice({"ASC", "DESC"}, message="Wrong value in sort.")
      */
@@ -20,26 +19,27 @@ class Command
      */
     public string $sort = '';
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Regex(pattern="/\d/")
      * @Assert\Length(max=1000, allowEmptyString=true)
      */
     public int $pageNumber = 1;
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Regex(pattern="/\d/")
      */
-    public int $rowCount = 20;
+    public int $rowCount = 5;
     /**
      * @Assert\Length(max=30, allowEmptyString=true)
      */
     public string $query = '';
 
-    public function writeData($data) {
+    public function writeData($data): void
+    {
         $this->query = $data['query'] ?? '';
         $this->order = $data['order'] ?? 'DESC';
         $this->sort = $data['sort'] ?? 'date';
         $this->pageNumber = isset($data['page']) ? (int)$data['page'] : 1;
-        $this->rowCount = isset($data['rowCount']) ? (int)$data['rowCount'] : 20;
+        $this->rowCount = isset($data['rowCount']) ? (int)$data['rowCount'] : 5;
     }
 }

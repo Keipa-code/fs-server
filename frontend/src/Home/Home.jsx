@@ -4,51 +4,31 @@ import { Redirect } from 'react-router-dom'
 import URLQueryEncode from '../Api/URLQueryEncode'
 
 function Home() {
-  const [formData, setFormData] = useState({
-    searchValue: '',
-  })
+  const [formData, setFormData] = useState('')
 
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const [path, setPath] = useState('')
 
   const handleChange = (event) => {
-    setFormData({
-      [event.target.name]: event.target.value,
-    })
+    setFormData(event.target.value)
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
     setErrors({})
 
-    setPath('?query=' + URLQueryEncode(formData.searchValue))
+    setPath('?query=' + URLQueryEncode(formData))
     setSubmitted(true)
-    /*   api
-      .get(path, {
-        searchValue: formData.searchValue
-      })
-      .then((response) => {
-          setSubmitted(true)
-          setData(response)
-
-      })
-
-      .catch(async (error) => {
-        if(error.status === 422) {
-          const data = await error.json()
-          setErrors(data.errors)
-        }
-      }) */
   }
-  console.log(submitted)
+
   if (submitted) {
     return (
       <Redirect
         push
         to={{
           pathname: '/search/',
-          search: path,
+          search: path !== '?query=' ? path : '',
         }}
       />
     )
@@ -65,11 +45,11 @@ function Home() {
           <div className="col-auto">
             <input
               className="form-control mt-2 col-3"
-              id="searchValue"
-              name="searchValue"
+              id="query"
+              name="query"
               type="search"
               placeholder="Поиск"
-              value={formData.searchValue}
+              value={formData}
               onChange={handleChange}
             />
             {errors.search ? (

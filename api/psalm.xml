@@ -20,6 +20,7 @@
         <ignoreFiles>
             <directory name="vendor" />
             <directory name="bin"/>
+            <file name="src/Factory/Thumb.php"/>
         </ignoreFiles>
     </projectFiles>
 

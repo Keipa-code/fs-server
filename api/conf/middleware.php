@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Http\Middleware\ClearEmptyInput;
 use App\Http\Middleware\DomainExceptionHandler;
-use App\Http\Middleware\SessionMiddleware;
 use App\Http\Middleware\ValidationExceptionHandler;
 use Slim\App;
 use Slim\Middleware\ErrorMiddleware;

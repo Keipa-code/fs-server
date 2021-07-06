@@ -7,10 +7,8 @@ namespace Test\Functional;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\UploadedFileInterface;
 use Slim\App;
 use Slim\Psr7\Factory\ServerRequestFactory;
-use Slim\Psr7\UploadedFile;
 
 /**
  * @internal
@@ -36,16 +34,15 @@ abstract class WebTestCase extends TestCase
 
     protected static function jsonWithFile(string $method, string $path, $file, array $body = []): ServerRequestInterface
     {
-        $request = (new ServerRequestFactory())->createServerRequest($method, $path)
+        return (new ServerRequestFactory())->createServerRequest($method, $path)
             //->withHeader('Accept', 'application/json')
             //->withHeader('Content-Type', 'application/json')
             ->withHeader('Tus-Resumable', '1.0.0')
             ->withHeader('Upload-Length', '70')
             ->withUploadedFiles([
-                'file' => $file
+                'file' => $file,
             ]);
         //$request->getBody()->write(json_encode($body, JSON_THROW_ON_ERROR));
-        return $request;
     }
 
     protected static function request(string $method, string $path): ServerRequestInterface

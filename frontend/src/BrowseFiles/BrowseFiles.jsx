@@ -19,53 +19,40 @@ const BrowseFiles = observer(() => {
   const history = useHistory()
   const [formData, setFormData] = useState('')
   const [errors, setErrors] = useState({})
-  const [submitted, setSubmitted] = useState(false)
 
-  if (!submitted) {
+  if (!file.submitted) {
+    history.push(
+      '/search' + (query.toString().length > 0 ? '?' + query.toString() : '')
+    )
+    api.get('/find' + '?' + query.toString()).then((data) => {
+      file.setFiles(data)
+    })
+    setFormData(query.get('query') ? query.get('query') : '')
     api
-      .get(
-        '/find' +
-          (query.get('query') !== null ? '?query=' + query.get('query') : '') +
-          (file.sorting !== undefined ? file.sorting : '')
-      )
-      .then((data) => {
-        file.setFiles(data)
+      .post('/getrowcount', {
+        query: formData,
       })
-    setFormData(query.get('query'))
-    setSubmitted(true)
+      .then((data) => {
+        file.setTotalCount(data)
+      })
+    file.setSubmitted(true)
   }
 
   const handleFormChange = (event) => {
+    console.log(formData.length)
     setFormData(event.target.value)
   }
 
   useEffect(() => {
-    if (file.sorting !== undefined) {
-      api
-        .get(
-          '/find' +
-            (query.get('query') !== null
-              ? '?query=' + query.get('query')
-              : '') +
-            file.sorting
-        )
-        .then((data) => {
-          file.setFiles(data)
-        })
-    }
-  }, [file.sorting, file.page, query, file])
+    query.set('sort', file.sorting.sort)
+    query.set('order', file.sorting.order)
+    if (query.has('page') || file.page > 1) query.set('page', file.page)
+  }, [file.sorting, file.page])
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
     setErrors({})
-    file.setFiles([])
-
-    history.push(
-      '/search' +
-        ('?query=' + URLQueryEncode(formData)) +
-        (file.sorting !== undefined ? file.sorting : '')
-    )
 
     api
       .post('/getrowcount', {
@@ -74,8 +61,9 @@ const BrowseFiles = observer(() => {
       .then((data) => {
         file.setTotalCount(data)
       })
+    query.set('query', URLQueryEncode(formData))
 
-    setSubmitted(false)
+    file.setSubmitted(false)
   }
 
   return (

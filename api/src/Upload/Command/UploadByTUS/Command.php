@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Upload\Command\UploadByTUS;
 
-
-class Command
+final class Command
 {
     public string $filename = '';
     public string $fileInfo = '';

@@ -10,7 +10,7 @@ use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 
-class FileFixture extends AbstractFixture
+final class FileFixture extends AbstractFixture
 {
     public function load(ObjectManager $manager): void
     {
