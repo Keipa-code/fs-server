@@ -21,7 +21,6 @@ const Pages = observer(() => {
           activeLabel={''}
           onClick={() => {
             file.setPage(page)
-            file.setSubmitted(false)
           }}
         >
           {page}

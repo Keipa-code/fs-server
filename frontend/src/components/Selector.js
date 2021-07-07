@@ -13,7 +13,6 @@ const Selector = observer(() => {
             sort: event.target.value.split(' ')[0],
             order: event.target.value.split(' ')[1],
           })
-          file.setSubmitted(false)
         }}
       >
         <option defaultValue={true} name="date" value="date DESC">

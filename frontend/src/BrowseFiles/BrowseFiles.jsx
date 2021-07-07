@@ -19,11 +19,9 @@ const BrowseFiles = observer(() => {
   const history = useHistory()
   const [formData, setFormData] = useState('')
   const [errors, setErrors] = useState({})
+  const [submitted, setSubmitted] = useState(false)
 
-  if (!file.submitted) {
-    history.push(
-      '/search' + (query.toString().length > 0 ? '?' + query.toString() : '')
-    )
+  if (!submitted) {
     api.get('/find' + '?' + query.toString()).then((data) => {
       file.setFiles(data)
     })
@@ -35,18 +33,28 @@ const BrowseFiles = observer(() => {
       .then((data) => {
         file.setTotalCount(data)
       })
-    file.setSubmitted(true)
+    setSubmitted(true)
+    window.scrollTo(0, 0)
   }
 
   const handleFormChange = (event) => {
-    console.log(formData.length)
     setFormData(event.target.value)
   }
 
   useEffect(() => {
-    query.set('sort', file.sorting.sort)
-    query.set('order', file.sorting.order)
-    if (query.has('page') || file.page > 1) query.set('page', file.page)
+    if (query.get('page') !== file.page) {
+      if (file.sorting.sort !== undefined) {
+        query.set('sort', file.sorting.sort)
+      }
+      if (file.sorting.order !== undefined) {
+        query.set('order', file.sorting.order)
+      }
+      if (query.has('page') || file.page > 1) query.set('page', file.page)
+      history.push(
+        '/search' + (query.toString().length > 0 ? '?' + query.toString() : '')
+      )
+      setSubmitted(false)
+    }
   }, [file.sorting, file.page])
 
   const handleSubmit = (event) => {
@@ -62,8 +70,10 @@ const BrowseFiles = observer(() => {
         file.setTotalCount(data)
       })
     query.set('query', URLQueryEncode(formData))
-
-    file.setSubmitted(false)
+    history.push(
+      '/search' + (query.toString().length > 0 ? '?' + query.toString() : '')
+    )
+    setSubmitted(false)
   }
 
   return (

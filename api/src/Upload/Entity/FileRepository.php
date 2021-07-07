@@ -37,7 +37,7 @@ final class FileRepository
             ->getQuery()->getArrayResult();
     }
 
-    public function get($sort, $order, int $offset, int $limit)
+    public function get($sort, $order, int $offset, int $limit): array
     {
         $qb = $this->repo->createQueryBuilder('p');
         return $qb->select('p')

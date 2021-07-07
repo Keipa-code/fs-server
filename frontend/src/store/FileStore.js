@@ -7,7 +7,6 @@ export default class FileStore {
     this._page = 1
     this._limit = 5
     this._sorting = ''
-    this._submitted = false
     makeAutoObservable(this)
   }
 

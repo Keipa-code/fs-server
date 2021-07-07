@@ -27,7 +27,7 @@ function Home() {
       <Redirect
         push
         to={{
-          pathname: '/search/',
+          pathname: '/search',
           search: path !== '?query=' ? path : '',
         }}
       />
@@ -66,7 +66,7 @@ function Home() {
           </div>
         </form>
       </div>
-      <div className="offset-xl-3 col-md-6">
+      <div className="d-flex justify-content-center">
         <Dropzone />
       </div>
     </div>

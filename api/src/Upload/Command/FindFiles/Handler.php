@@ -10,19 +10,17 @@ use Psr\Log\LoggerInterface;
 final class Handler
 {
     private FileRepository $files;
-    private LoggerInterface $logger;
 
-    public function __construct(FileRepository $files, LoggerInterface $logger)
+    public function __construct(FileRepository $files)
     {
         $this->files = $files;
-        $this->logger = $logger;
     }
 
     public function handle(Command $command): array
     {
         $offset = 0;
         if ($command->pageNumber > 1) {
-            $offset = (int)$command->pageNumber * 5;
+            $offset = (int)$command->pageNumber * 5 - 5;
         }
         if ($command->query) {
             return $this->files->find(
