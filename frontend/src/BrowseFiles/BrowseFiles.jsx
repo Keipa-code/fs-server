@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory, NavLink } from 'react-router-dom'
 import './BrowseFiles.css'
 import api from '../Api/Api'
 import URLQueryEncode from '../Api/URLQueryEncode'
@@ -77,34 +77,43 @@ const BrowseFiles = observer(() => {
   }
 
   return (
-    <div className="container">
-      <h3 className="my-4">Результаты по запросу: {query.get('query')}</h3>
-      <div className="row justify-content-center">
-        <form className="d-flex" onSubmit={handleSubmit}>
-          <input
-            className="form-control p-2 my-2 bd-highlight"
-            id="query"
-            name="query"
-            type="search"
-            placeholder="Поиск"
-            value={formData}
-            onChange={handleFormChange}
-          />
-          {errors.search ? (
-            <div className="input-error">{errors.search}</div>
-          ) : null}
-          <button
-            type="submit"
-            className="btn btn-primary p-2 m-2 bd-highlight"
-          >
-            Поиск
-          </button>
-        </form>
-        <Selector />
+    <div>
+      <div className="container-fluid bg-primary d-flex">
+        <h1 className="text-light p-2 bd-highlight">
+          <NavLink to="/" style={{ color: 'white', textDecoration: 'none' }}>
+            FS-Server
+          </NavLink>
+        </h1>
       </div>
+      <div className="container">
+        <h3 className="my-4">Результаты по запросу: {query.get('query')}</h3>
+        <div className="row justify-content-center">
+          <form className="d-flex" onSubmit={handleSubmit}>
+            <input
+              className="form-control p-2 my-2 bd-highlight"
+              id="query"
+              name="query"
+              type="search"
+              placeholder="Поиск"
+              value={formData}
+              onChange={handleFormChange}
+            />
+            {errors.search ? (
+              <div className="input-error">{errors.search}</div>
+            ) : null}
+            <button
+              type="submit"
+              className="btn btn-primary p-2 m-2 bd-highlight"
+            >
+              Поиск
+            </button>
+          </form>
+          <Selector />
+        </div>
 
-      <FilesList />
-      <Pages />
+        <FilesList />
+        <Pages />
+      </div>
     </div>
   )
 })
